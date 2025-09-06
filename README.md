@@ -10,6 +10,9 @@ player attempts to create the straight sequence S-O-S among connected squares (d
 horizontally, or vertically). To keep track of who made which SOSs, a line in the player’s color
 (i.e., blue or red) is drawn for each SOS sequence, as shown in the following figure.
 
+<img width="696" height="401" alt="image" src="https://github.com/user-attachments/assets/9494d6c9-3009-41aa-bfc5-08c8fd19eecf" />
+Figure 1. Sample GUI layout of the final product
+
 The instructions of each assignment may include a sample graphical user interface (GUI). As
 GUI is a topic in CS 101, you are strongly encouraged to implement a GUI for the SOS game.
 The use of an interactive console interface is strongly discouraged. The TicTacToe case study to
