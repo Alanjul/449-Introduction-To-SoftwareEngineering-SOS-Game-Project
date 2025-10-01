@@ -52,7 +52,7 @@ public class BoardTest {
 	{
 		assertEquals('-', board.getCell(-1, 0)); //test for row < 0
 		assertEquals('-', board.getCell(0, -1)); //column less than 0
-		assertEquals('-', board.getCell(0, 5));//column greate or equal to size
+		assertEquals('-', board.getCell(0, 5));//column greater or equal to size
 		assertEquals('-', board.getCell(5, 0)); // row greater or equal to size
 	}
 	
