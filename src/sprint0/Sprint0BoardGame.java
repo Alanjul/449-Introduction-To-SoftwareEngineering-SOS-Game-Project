@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,7 +30,10 @@ public class Sprint0BoardGame extends JFrame {
 	private JPanel topPanel = new JPanel();
 	private JPanel westPanel = new JPanel();
 	private JPanel eastPanel = new JPanel();
+	private JRadioButton blue1, blue2,red1, red2;
 	private JPanel bottomPanel = new JPanel();
+	private JLabel currentTurn;
+	private JButton[][]gameBoard;
 	private JTextField textField; //textField
 	private JSpinner spinner; //declaration of the spinner
 	private JScrollPane scrollPane; //declaration of the scrollpane
@@ -51,7 +55,7 @@ public class Sprint0BoardGame extends JFrame {
 		frame.setTitle("Welcome to SOS Game");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
-
+		frame.setPreferredSize(new Dimension(600,600));
 		// Create jspinner
 		spinner = new JSpinner(new SpinnerNumberModel(game.getGridSize(), 3, 15, 1));
 
