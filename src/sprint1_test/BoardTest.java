@@ -5,16 +5,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint1.Board;
+import sprint1.Board1;
 
 
 public class BoardTest {
-	private Board board;
+	private Board1 board;
 	
 	@Before 
 	public void setUp()
 	{
-		board = new Board(5);
+		board = new Board1(5);
 	}
 
 	@After

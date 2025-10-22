@@ -31,10 +31,10 @@ public class BoardPanel extends JPanel {
 	private JRadioButton blueS, blueO, redS, redO;
 	//default mode
 	private boolean simpleGameSelected = true;
-	private Board board;
+	private Board1 board;
 	private BoardGameGui parent;
 	
-	public BoardPanel(BoardGameGui parent,Board board)
+	public BoardPanel(BoardGameGui parent,Board1 board)
 	{
 		this.parent = parent;
 		this.board = board;
@@ -69,12 +69,10 @@ public class BoardPanel extends JPanel {
 	{
 		JPanel panel  = new JPanel(new FlowLayout());
 		panel.setBorder(BorderFactory.createTitledBorder("Game Settings"));
-		
 		//label
 		label = new JLabel("SOS");
 		label.setFont(new Font("Arial", Font.BOLD, 12));
 		panel.add(label);
-		
 		//Game  mode Button ratio
 		ButtonGroup button = new ButtonGroup();
 		simpleGameButton = new JRadioButton("Simple Game", true);
@@ -82,14 +80,12 @@ public class BoardPanel extends JPanel {
 		
 		button.add(simpleGameButton);
 		button.add(generalGameButton);
-		
 		//add selection listener
 		ActionListener buttonListener= e -> {
 			simpleGameSelected = simpleGameButton.isSelected();
 			resetGame(gridSize);
 			
 		};
-		
 		//add action listeners
 		simpleGameButton.addActionListener(buttonListener);
 		generalGameButton.addActionListener(buttonListener);
@@ -109,8 +105,6 @@ public class BoardPanel extends JPanel {
 		//add to panel
 		panel.add(boardSpinner);
 		
-		
-		
 		return panel;
 	}
 	
@@ -118,7 +112,7 @@ public class BoardPanel extends JPanel {
 	public  void resetGame(int size)
 	{
 		this.gridSize = size;
-	   this.board = new Board(size);
+	   this.board = new Board1(size);
 	   
 	   int newSize = size * CELL_SIZE;
 	   gamePanel.setPreferredSize(new Dimension(newSize, newSize));
@@ -176,16 +170,11 @@ public class BoardPanel extends JPanel {
 		 //spacing
 		 bottom.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 		 
-		 //create header panel
-		 
-		 //title
 		 JCheckBox recordCheck =  new JCheckBox("Record Game");
 		 recordCheck.setFont(new Font ("Arial", Font.BOLD,14));
 		 JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		 leftPanel.add(recordCheck);
 		  bottom.add(leftPanel, BorderLayout.WEST);
-	
-			
 		 
 			JPanel rightPanel = new JPanel(new FlowLayout());
 			rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
@@ -211,9 +200,6 @@ public class BoardPanel extends JPanel {
 			gameButton.addActionListener(e -> resetGame(gridSize));
 			rightPanel.add(gameButton);
 			
-			//bottom.add(recordCheck);
-			//bottom.add(currentLabel);
-			//bottom.add(gameButton);
 			bottom.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			bottom.add(rightPanel, BorderLayout.EAST);
 		 
@@ -279,7 +265,7 @@ public class BoardPanel extends JPanel {
 			return redS.isSelected() ? 'S' : 'O';
 		}
 		
-		public Board getBoard() {
+		public Board1 getBoard() {
 			return board;
 		}
 	 
