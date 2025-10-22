@@ -14,8 +14,8 @@ public class BoardGameGui extends JFrame {
 	
 	ButtonGroup gameMode;
 	private BoardPanel panel;
-	private Board board;
-	public BoardGameGui(Board board)
+	private Board1 board;
+	public BoardGameGui(Board1 board)
 	{
 		this.board = board;
 		this.setTitle("SOS Game");
@@ -40,7 +40,7 @@ public class BoardGameGui extends JFrame {
 	{
 		
         SwingUtilities.invokeLater(() -> {
-        	Board board = new Board(4);
+        	Board1 board = new Board1(4);
         	BoardGameGui gui  = new BoardGameGui(board);});
 	}
 	

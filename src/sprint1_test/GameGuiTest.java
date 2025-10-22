@@ -9,19 +9,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint1.Board;
+import sprint1.Board1;
 import sprint1.BoardGameGui;
 
 
 public class GameGuiTest {
 	
 private BoardGameGui gameGui;
-private Board board;
+private Board1 board;
 	
 	@Before
 	public void setUp() throws IOException
 	{
-		board = new Board(8);
+		board = new Board1(8);
 	}
 	
 	@After

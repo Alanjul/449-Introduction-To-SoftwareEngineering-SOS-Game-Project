@@ -1,11 +1,13 @@
 package sprint1;
 
-public class Board {
+
+
+public class Board1{
 	private char[][] grid;
-	private char turn = 'X';
+	private char turn = 'S';
 	private int size;//initialize the  board size
 
-	public Board(int size) {
+	public Board1(int size) {
 		this.size = size;
 		grid = new char [size][size];
 		 turn = 'S';
@@ -39,4 +41,6 @@ public class Board {
 	 {
 		 turn = (turn == 'S') ? 'O' : 'S';
 	 }
+
+	 
 }
