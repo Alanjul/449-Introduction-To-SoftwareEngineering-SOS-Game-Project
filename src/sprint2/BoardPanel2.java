@@ -29,6 +29,7 @@ public class BoardPanel2 extends JPanel {
 	private JSpinner boardSpinner;
 	private JRadioButton simpleGameButton, generalGameButton;
 	private JRadioButton blueS, blueO, redS, redO;
+	
 	// default mode
 	private boolean simpleGameSelected = true;
 	private BoardGui parent;
@@ -231,6 +232,8 @@ public class BoardPanel2 extends JPanel {
 		char current = board.getTurn();
 		currentLabel.setText("Current turn: blue (or red)" + (current == 'S' ? " Blue's turn" : " Red's turn"));
 	}
+	
+
 
 	
 
