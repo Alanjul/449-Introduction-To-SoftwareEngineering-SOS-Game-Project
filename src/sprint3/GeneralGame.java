@@ -79,7 +79,7 @@ public class GeneralGame extends Game {
 		}
 		if(winner == 'B')
 		{
-			return "Blue Player wins the game  with scores of (" + blueScore  + " Vs " + redScore + " for Red player";
+			return "Blue Player wins the game  with scores of " + blueScore  + " Vs " + redScore + " for Red player";
 		}
 		else if (winner == 'R')
 		{
