@@ -3,8 +3,7 @@ package sprint3;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-//NB. TODO: REMOVE all print statement before submission
-import sprint2.GameMode;
+
 
 public class Board3 {
 	
@@ -140,14 +139,7 @@ public class Board3 {
 
 	
 
-	// setters and getters
-	public char[][] getGrid() {
-		return grid;
-	}
-
-	public void setGrid(char[][] grid) {
-		this.grid = grid;
-	}
+	// setters and gette
 
 
 
@@ -155,10 +147,7 @@ public class Board3 {
 		return size;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
-
+	
 	//returns all sos
 	public List<LineSegment> getSosLineFormed() {
 		return sosLineFormed;

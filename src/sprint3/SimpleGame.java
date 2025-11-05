@@ -66,5 +66,14 @@ public class SimpleGame extends Game {
 		return "";
 	}
 
+	public char getWinner() {
+		return winner;
+	}
+
+	public void setWinner(char winner) {
+		this.winner = winner;
+		setGameOver(true);
+	}
+
 }
 
