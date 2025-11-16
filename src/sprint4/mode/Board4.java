@@ -39,7 +39,8 @@ public class Board4  implements Board{
 	@Override
 	public char getCell(int row, int column) {
 		
-		checkValidRowsAndColumns(row, column);
+		if(row < 0  || row >= size || column < 0 || column >= size)
+			return EMPTY;
 		return grid[row][column];
 	}
 
@@ -93,7 +94,7 @@ public class Board4  implements Board{
 	private  void checkValidRowsAndColumns(int row, int col) {
 		if( row < 0 || row >= size || col < 0 || col >= size)
 		{
-			throw new IndexOutOfBoundsException("Invalid position ("+ row + ", "+ col +") size must be " + (size-1));
+			throw new IndexOutOfBoundsException("Invalid position ("+ row + ", "+ col +") valid indices are 0 to " + (size-1));
 		}
 	}
 
@@ -137,9 +138,6 @@ public class Board4  implements Board{
 		for (int i = 0; i < size; i++) {
 			System.arraycopy(other.grid[i], 0, this.grid[i], 0, size);
 		}
-		//copy.countMove = this.countMove;// copy the number of move made
-		
-		//return copy;// return the full copied board with no modification
 	}
 	
 	//return deep copy of the board
@@ -185,6 +183,5 @@ public class Board4  implements Board{
 		}
 		return sb.toString();
 	}
-//representation of board game
-//public static record Cell(int row, int col) {}
+
 }
