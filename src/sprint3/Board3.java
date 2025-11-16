@@ -132,15 +132,11 @@ public class Board3 {
 	return count;
 
 	}//end of the methoth
+	
 	// helper method to check for valid row and col
 	private  boolean checkValidRowsAndColumns(int row, int col) {
 		return row >= 0 && row < size && col >= 0 && col < size;
 	}
-
-	
-
-	// setters and gette
-
 
 
 	public int getSize() {
