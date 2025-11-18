@@ -44,7 +44,7 @@ public class SimpleGame4  extends Game4{
 	
 	
 	@Override
-	protected String generateResult() {
+	public String generateResult() {
 		if (state == GameState.IN_PROGRESS) {
 			return getCurrentPlayer().getName() + " -Game in progress in Simple mode";
 		}
