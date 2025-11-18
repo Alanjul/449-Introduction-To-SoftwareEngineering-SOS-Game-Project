@@ -2,7 +2,9 @@ package sprint4.Util;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import sprint4.mode.Board;
 import sprint4.mode.Board4;
@@ -44,13 +46,19 @@ public class BoardSearcher {
 		{
 			return new ArrayList<>();
 		}
-		return (letter == 'S') ? findPatternStartingWithS(board, row, col, color): 
+		List<LineSegment4>pattern =  (letter == 'S') ? findPatternStartingWithS(board, row, col, color): 
 			findPatternWithOInMiddle(board, row, col, color);
+		return removeDuplicate(pattern);
 	}
 	//finding SOS patter with s at row, col
 	private static List<LineSegment4>findPatternStartingWithS(Board board, int row, int col, Color color)
 	{
 		List<LineSegment4> sosPattern = new ArrayList<>(8);//start checking  8 direction
+		
+		if(board.getCell(row, col) != 'S')
+		{
+			return sosPattern;
+		}
 		for (int []dir : DIRECTIONS)
 		{
 			//checking SOS formed
@@ -82,8 +90,14 @@ public class BoardSearcher {
 	{
 		List<LineSegment4> sosPattern = new ArrayList<>(8);
 		//check 4 directions
-		for (int i = 0; i < 4; i++) {
-			int[] dir = DIRECTIONS[i];
+		int [][]axes = {
+				{1,0},
+				{0,1},
+				{1,1},
+				{1,-1}
+		};
+		for (int []dir : axes) {
+			
 			int startRow = row - dir[0];
 			int startCol = col - dir[1];
 			int endRow = row + dir[0];
@@ -184,8 +198,9 @@ public class BoardSearcher {
 				maxSOS = sosCount;
 				bestMove = new Move(row, col, letter);
 			}
-			//pick the first valid move, if all moves produces the same score(0)
+			
 		}
+		//pick the first valid move, if all moves produces the same score(0)
 		if(bestMove  == null)
 		{
 			Board.Cell firstMove  = emptyCells.get(0);
@@ -193,6 +208,31 @@ public class BoardSearcher {
 		}
 		
 		return bestMove;
+	}
+	
+	//Removing duplicate SOS pattern
+	private static List<LineSegment4>removeDuplicate(List<LineSegment4>patterns)
+	{
+		List<LineSegment4>uniqueLine = new ArrayList<>();
+		Set<String>visited = new HashSet<>();
+		for(LineSegment4 line : patterns)
+		{
+			int row1 = line.getStartRow(), col1 = line.getStartCol();
+			int row2 = line.getEndRow(), col2 = line.getEndCol();
+			String smaller;
+			if(row1 < row2 || (row1 == row2 && col1 < col2))
+			{
+				smaller = row1 + "," + col1 + "-" + row2 + "," + col2;
+			}else
+			{
+				smaller = row2 + "," + col2 + "-" + row1 + "," + col1;
+			}
+			if(visited.add(smaller))
+			{
+				uniqueLine.add(line);
+			}
+		}
+		return uniqueLine;
 	}
 
 }

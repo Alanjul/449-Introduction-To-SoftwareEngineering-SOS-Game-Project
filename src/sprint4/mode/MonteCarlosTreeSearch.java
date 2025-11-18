@@ -32,22 +32,23 @@ public class MonteCarlosTreeSearch {
 	 * @param difficulty level
 	 */
 	public MonteCarlosTreeSearch(Player computerPlayer, Player opponentPlayer,
-			ComputerPlayer.LevelsOfDifficulty difficulty) {
+			ComputerPlayer.LevelsOfDifficulty difficulty, Game4 game) {
 		this.computerPlayer = computerPlayer;
 		this.opponentPlayer = opponentPlayer;
 		this.iterations = getIteration(difficulty);
 		this.random = new Random();
 		this.totalSimulations = 0;
+		this.game = game;
 	}
 
 	/* Get the iteration based on difficulty level */
 	private int getIteration(ComputerPlayer.LevelsOfDifficulty difficulty) {
 		return switch (difficulty) {
 		case RANDOM -> 50;
-		case EASY -> 150;
-		case MEDIUM -> 400;
-		case HARD -> 600;
-		case EXPERT -> 800;
+		case EASY -> 300;
+		case MEDIUM -> 8000;
+		case HARD -> 12000;
+		case EXPERT -> 25000;
 		};
 	}
 
@@ -81,16 +82,16 @@ public class MonteCarlosTreeSearch {
 			//expand to child if possible
 			MCTSNode expansion =  expand(selectPromisingNode);
 			
-			//simulate: Play random game with this node
+			//simulate. Play random game with this node
 			double simulationResult = simulate(expansion, game);
 			
-			//BacKPropagation:  update the root with statistics
+			//BacKPropagation! update the root with statistics
 			backPropagate(expansion, simulationResult);
 			
 		}
-		
+		Move bestMove = getBestChildrenMove(root);
 
-		return getBestChildrenMove(root);//return the most promising node
+		return bestMove;//return the most promising node
 	}
 
 	private List<Move> getAvailableMoves(Board board) {
@@ -142,9 +143,9 @@ public class MonteCarlosTreeSearch {
 	// Generate all moves 
 	private static List<Move> generateMove(Board board) {
 		List<Move> moves = new ArrayList<>();
-		List<Board4.Cell> emptyCells = board.getEmptyCells();// retrieve empty board
+		List<Board.Cell> emptyCells = board.getEmptyCells();// retrieve empty board
 		// loop through the empty board as you place S or O
-		for (Board4.Cell cell : emptyCells) {
+		for (Board.Cell cell : emptyCells) {
 			moves.add(new Move(cell.row(), cell.col(), 'S'));
 			moves.add(new Move(cell.row(), cell.col(), 'O'));
 		}
@@ -195,13 +196,22 @@ public class MonteCarlosTreeSearch {
 		Board nextState = node.state.copy();// make a copy of the board
 		nextState.makeMove(mv.getRow(), mv.getCol(), mv.getLetter());
 
-		char nextPlayer = (node.playerToMove == node.computerLetter) ? node.opponentLetter : node.computerLetter;
+		int sosFormed = BoardSearcher.findSOSPatterns(nextState, mv.getRow(),mv.getCol(), null).size();
 		
-		//create a new child node
-		MCTSNode newNode = new MCTSNode(mv, nextState, nextPlayer, node.computerLetter, node.opponentLetter, node);
+		char nextPlayer;
+		if(game.getMode() == GameMode4.GENERAL && sosFormed > 0)
+		{
+			nextPlayer = node.playerToMove;
+		}else {
+			nextPlayer = (node.playerToMove == node.computerLetter) 
+		            ? node.opponentLetter 
+		            : node.computerLetter;
 		
+		}
 		// add the new node to parent
-		node.children.add(newNode);
+		MCTSNode newNode = new MCTSNode(mv, nextState, nextPlayer, 
+		        node.computerLetter, node.opponentLetter, node);
+		    node.children.add(newNode);
 		return newNode;
 	}
 
@@ -209,9 +219,10 @@ public class MonteCarlosTreeSearch {
 	private double simulate(MCTSNode node,  Game4 game) {
 		Board simBoard = node.state.copy();
 		char currentPlayer = node.playerToMove; // tracks whose turn it is
+		GameMode4 mode = game.getMode();
 
 		int computerScore = 0;
-		int oppositeScore = 0;
+		int opponentScore = 0;
 		
 		//Play random moves until board is full or max depth is reached
 		int maxDepth = simBoard.getEmptyCells().size();
@@ -222,38 +233,44 @@ public class MonteCarlosTreeSearch {
 			if (empty.isEmpty())
 				break;
 
+			
+			//Try to form SOS 
+			Move move = null;
+	        if (random.nextDouble() < 1) {
+	            move = findScoringMove(simBoard);
+	        }
+	        //Other play random
+	        if(move == null) {
 			Board.Cell cell = empty.get(random.nextInt(empty.size()));
 			char letter = random.nextBoolean() ? 'S': 'O'; //choose between S and O
-			simBoard.makeMove(cell.row(), cell.col(), letter);
-			
+			move = new Move(cell.row(), cell.col(), letter);
+	        }
+			simBoard.makeMove(move.getRow(), move.getCol(), move.getLetter());
 			//check how many SOS formed 
-			int sosFormed = BoardSearcher.findSOSPatterns(simBoard, cell.row(), cell.col(), null).size();
+			int sosFormed = BoardSearcher.findSOSPatterns(simBoard, move.getRow(), move.getCol(), null).size();
 			
 			//award points
 			if (currentPlayer == node.computerLetter) {
 				computerScore += sosFormed ;
 
 			} else {
-				oppositeScore += sosFormed;
+				opponentScore += sosFormed;
 			}
-			// if sos is Formed in general mode, player continues no turn
-			boolean isGeneral = (game.getMode() == GameMode4.GENERAL);
-			if(!isGeneral || sosFormed == 0)
-			{
-				currentPlayer = (currentPlayer == node.computerLetter)? node.opponentLetter : 
-					node.computerLetter;
-			}
-		}
-		if (computerScore > oppositeScore) {
-			return 1; // Computer wins
-		}
-		else if (computerScore < oppositeScore)
-		{
-			return -1; //computer loss
-		}else
-		{
-		return 0; //draw
-		}
+			
+			if (mode == GameMode4.GENERAL) {
+                if (sosFormed == 0) {
+                    currentPlayer = (currentPlayer == node.computerLetter)
+                            ? node.opponentLetter
+                            : node.computerLetter;
+                }
+            } else {
+                // SIMPLE MODE: turn always switches
+                currentPlayer = (currentPlayer == node.computerLetter)
+                        ? node.opponentLetter
+                        : node.computerLetter;
+            }
+        }
+		return Integer.compare(computerScore, opponentScore);
 	}
 
 	private void backPropagate(MCTSNode node, double value) {
@@ -261,22 +278,50 @@ public class MonteCarlosTreeSearch {
        while(node != null)
        {
     	   node.visits ++;
+    	  
     	   node.score += value;
+    	
+    	   if (node.parent != null && node.playerToMove != node.parent.playerToMove) {
+               value = -value;
+           }
     	   
-    	   //Move to parent
-    	   MCTSNode parent = node.parent;
-    	   
-    	   //assign to opponent (Zero sum) and negate if a player actually changed
-    	   if(parent != null)
-    		   if (node.playerToMove != parent.playerToMove)
-    			   value = -value;
-    	   node = parent;
+    	   node = node.parent;
        }
 	}
 	
 	private Move getBestChildrenMove(MCTSNode root)
 	{
 		MCTSNode bestChild = null;
+		double bestAverage = Double.NEGATIVE_INFINITY;
+		List<MCTSNode>qualified = new ArrayList<>();
+		for (MCTSNode child : root.children)
+		{
+			
+			if(child.visits >= 3)
+			{
+				qualified.add(child);
+				
+			}
+		}
+		//Sort the visits
+		qualified.sort((a, b) -> Double.compare(b.score / b.visits, a.score / a.visits));
+
+		// Get the top 5
+		int printCount = Math.min(5, qualified.size());
+		for (int i = 0; i < printCount; i++) {
+			MCTSNode child = qualified.get(i);
+			double avg = child.score / child.visits;
+
+			if (avg > bestAverage) {
+				bestAverage = avg;
+				bestChild = child;
+			}
+		}
+		
+	
+	//fall back to most visited if no more has visited
+	if(bestChild == null)
+	{
 		int maxVisits = -1;
 		for (MCTSNode child : root.children)
 		{
@@ -286,12 +331,29 @@ public class MonteCarlosTreeSearch {
 				bestChild = child;
 			}
 		}
-		return bestChild != null ? bestChild.move : null;
-		
 	}
+	return bestChild != null ? bestChild.move : null;
+}
 	//Getting the number of simulation
 	public int getTotalSimulations() {
 		return totalSimulations;
+	}
+	
+	//Helper method for for finding a move that scores
+	private Move findScoringMove(Board board) {
+	    List<Board.Cell> empty = board.getEmptyCells();
+	    for (Board.Cell cell : empty) {
+	       //check s
+	        if (BoardSearcher.countSOS(board, cell.row(), cell.col(), 'S') > 0) {
+	            return new Move(cell.row(), cell.col(), 'S');
+	        }
+	       // check Y
+	        if (BoardSearcher.countSOS(board, cell.row(), cell.col(), 'O') > 0) {
+	            return new Move(cell.row(), cell.col(), 'O');
+	        }
+	    }
+	    return null;
+	
 	}
 
 }

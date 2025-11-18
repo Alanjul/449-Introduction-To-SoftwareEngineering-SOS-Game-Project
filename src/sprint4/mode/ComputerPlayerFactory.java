@@ -1,7 +1,7 @@
 package sprint4.mode;
 
 //Implements PlayerFactory abstraction
-//USes computerStrategy  injection
+//Uses computerStrategy  injection
 public class ComputerPlayerFactory implements PlayerInterface {
 
 	private final ComputerStrategy strategy;

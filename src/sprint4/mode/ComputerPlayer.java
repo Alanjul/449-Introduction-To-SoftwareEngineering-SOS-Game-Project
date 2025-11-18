@@ -9,11 +9,12 @@ import sprint4.mode.Board.Cell;
 public class ComputerPlayer extends Player {
 
 	public enum LevelsOfDifficulty{
+	
 		RANDOM("Random", "Make random moves", 50),
-		EASY ("Easy", "Forms SOS whenever possible", 150),
-		MEDIUM("Medium", "Use Monte Carlo Tree search with 400 simulation", 400),
-		HARD("Hard", "Use Monte Carlo Tree search with 600 simulation", 600),
-		EXPERT("Expert", "Monte Carlo Tree with 800 simulation", 800);
+		EASY ("Easy", "Forms SOS whenever possible", 300),
+		MEDIUM("Medium", "Use Monte Carlo Tree search with 400 simulation", 8000),
+		HARD("Hard", "Use Monte Carlo Tree search with 600 simulation", 12000),
+		EXPERT("Expert", "Monte Carlo Tree with 800 simulation", 25000);
 		
 		private String name;
 		private String description;

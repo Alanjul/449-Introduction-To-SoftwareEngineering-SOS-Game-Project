@@ -96,47 +96,91 @@ public class Board4Test {
 			assertEquals("The size must be between 3 and 15", ex.getMessage());
 		}
 	}
-	//@Test
-	//testing for SOS 
-	/*public void testCheckSosHorizontal()
+	@Test
+	//Testing valid moves 
+	public void validMove()
+	{
+		assertTrue(board.makeMove(0, 0, 'S'));
+		assertEquals('S', board.getCell(0, 0));
+		//count
+		assertEquals(1, board.getCountMove());
+		assertFalse(board.isEmpty(0, 0));
+		
+	}
+	//Testing for occupied cell
+	@Test
+	public void occupiedCells()
+	{
+		board.makeMove(1, 1, 'S');
+		assertFalse(board.makeMove(1, 1, 'O'));//testing for overwrite
+		//check if the count is the same after 2 moves
+		assertEquals(1, board.getCountMove());
+	}
+	//Testing invalid  xletter
+	@Test
+	public  void testInvalidXLetter() {
+		
+		try
+		{
+			board.makeMove(0, 0, 'X');
+			fail("Expected Illegal Argument Exception");
+		} catch(IllegalArgumentException ex)
+		{
+			assertEquals("Invalid letter, Only 'S' or 'O' is allowed", ex.getMessage());
+		}
+	}
+	//Testing for invalid y letter
+	//Acceptance criteria
+	@Test
+	public void testChecInvalidLetter()
+	{
+	   try {
+		   board.makeMove(0, 0, 'Y');
+		   fail("Expected Illegal Argument Exception");
+	   } catch(IllegalArgumentException ex)
+	   {
+		   assertEquals("Invalid letter, Only 'S' or 'O' is allowed", ex.getMessage());
+	   }
+	}
+	//Test to see if the board is full
+	//Acceptance criteria
+	@Test 
+	public void testBoardFull()
+	{
+		assertFalse(board.isFull());
+		for(int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				board.makeMove(i, j, 'S');
+			}
+		}
+		assertTrue(board.isFull());
+		assertEquals(16, board.getCountMove());
+		assertTrue(board.getEmptyCells().isEmpty());//checking for no empty board
+		
+	}
+	
+	//Testing changes made to copy to make sure they don't affect the original
+	@Test
+	public void testBoardCopy()
 	{
 		board.makeMove(0, 0, 'S');
-		board.makeMove(0, 1, 'O');
-		board.makeMove(0, 2, 'S');
-		//check SOS
-		//assertEquals(1, board.checkSOS(0, 2));
-	}*/
-	//testing SOS Line formed
-	/*@Test
-	public void testSosLine()
-	{
+		board.makeMove(1, 1,  'O');
 		
-	}*/
-	//Testing the horizontal SOS 
-	/*@Test
-	public  void testCheckSosVertically() {
+		Board other = board.copy();
+
+		//Check if states are not changed
+		assertEquals(other.getCell(0, 0), board.getCell(0, 0));
+		assertEquals(other.getCountMove(), board.getCountMove());
+		assertEquals(other.getCell(1, 1), board.getCell(1, 1));
+		assertEquals(other.getSize(), board.getSize());
 		
-	;
-	}*/
-	//check for match
-	/*@Test
-	public void testCheckSosNoMatch()
-	{
-	   ;
-	}*/
-	//Test clear method
-	/*@Test 
-	public void testClearSosLines()
-	{
-		
-	}*/
-	
-	//testing the line should not be addeded
-	/*@Test
-	public void testNullSosLine()
-	{
-		
-	}*/
+		//Checking if deep copy has been done
+		other.makeMove(2, 2, 'O');
+	    assertEquals('\u0000', board.getCell(2, 2));//original not changed
+	    assertEquals('O', other.getCell(2, 2));
+	}
 
 
 }

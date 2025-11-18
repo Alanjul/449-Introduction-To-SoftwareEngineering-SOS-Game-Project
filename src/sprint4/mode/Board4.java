@@ -106,7 +106,7 @@ public class Board4  implements Board{
 		 return grid[row][col] == EMPTY;
 	}
 
-	/* GetEmptyCells Emthod  used by the computer player to make a move
+	/* GetEmptyCell used by computer player to make a move
 	 *returns a list of int[] arrays where the computer can place the letter
 	 * */
 	@Override
