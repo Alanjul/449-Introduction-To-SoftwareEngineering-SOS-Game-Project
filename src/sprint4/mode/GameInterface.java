@@ -12,6 +12,4 @@ public interface GameInterface {
 	Game4 createGame(Board board, Player bluePlayer, Player redPlayer);
 	
 	GameMode4 getGameMode(); //return the game mode
-	
-
-}
+	}

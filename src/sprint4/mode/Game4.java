@@ -6,7 +6,7 @@ import java.util.List;
 
 import sprint3.Board3;
 import sprint3.GameMode3;
-import sprint4.Util.BoardSearcher;
+import sprint4.util.BoardSearcher;
 
 public abstract class Game4 {
 	
@@ -87,7 +87,6 @@ public abstract class Game4 {
 			redScore += sosCount;
 			redPlayer.addScore(sosCount);
 		}
-		//Check if we should switch turns
 		boolean switchTurns = shouldSwitchTurns(sosCount);
 		
 		if(switchTurns)
@@ -99,7 +98,6 @@ public abstract class Game4 {
 		return new MoveResult("Move successful", true, newLines);
 	}
 	
-	//Method to determine if turns should switch after every move
 	protected abstract boolean shouldSwitchTurns(int sosFormed);
 	//Check  if the game  is over
 	protected abstract void checkGameOver();

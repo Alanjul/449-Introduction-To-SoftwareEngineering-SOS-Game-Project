@@ -1,6 +1,6 @@
 package sprint4Test;
-import sprint4.Util.*;
 import sprint4.mode.*;
+import sprint4.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import sprint2.GameMode;
-import sprint4.Util.BoardSearcher;
+import sprint4.util.BoardSearcher;
 
 /**
  * This is the implementation of Monte carlo Tree Search for my board game to
@@ -55,14 +54,11 @@ public class MonteCarlosTreeSearch {
 	/* findBestMove used to find the best move to make */
 	public Move findBestMove(Board board, Game4 game) {
 		totalSimulations = 0;
-		// get all moves
 		List<Move> availableMoves = getAvailableMoves(board);
-		//no move available
 		if(availableMoves.isEmpty())
 		{
 			return  null;
 		}
-		//if it is one move return immediately
 		if(availableMoves.size() == 1)
 		{
 			return availableMoves.get(0);
@@ -78,14 +74,8 @@ public class MonteCarlosTreeSearch {
 			totalSimulations++;
 			//select the promising node to explore
 			MCTSNode selectPromisingNode = select(root);
-			
-			//expand to child if possible
 			MCTSNode expansion =  expand(selectPromisingNode);
-			
-			//simulate. Play random game with this node
 			double simulationResult = simulate(expansion, game);
-			
-			//BacKPropagation! update the root with statistics
 			backPropagate(expansion, simulationResult);
 			
 		}
@@ -96,9 +86,8 @@ public class MonteCarlosTreeSearch {
 
 	private List<Move> getAvailableMoves(Board board) {
 		List<Move> moves = new ArrayList<>();
-		// get empty cells
+		
 		List<Board.Cell> emptyCells = board.getEmptyCells();
-		// loop through empty cells to look where to put S or O
 		for (Board.Cell cell : emptyCells) {
 			moves.add(new Move(cell.row(), cell.col(), 'S')); // place s
 			moves.add(new Move(cell.row(), cell.col(), 'O')); // places o
@@ -144,7 +133,6 @@ public class MonteCarlosTreeSearch {
 	private static List<Move> generateMove(Board board) {
 		List<Move> moves = new ArrayList<>();
 		List<Board.Cell> emptyCells = board.getEmptyCells();// retrieve empty board
-		// loop through the empty board as you place S or O
 		for (Board.Cell cell : emptyCells) {
 			moves.add(new Move(cell.row(), cell.col(), 'S'));
 			moves.add(new Move(cell.row(), cell.col(), 'O'));
@@ -153,7 +141,6 @@ public class MonteCarlosTreeSearch {
 	}
 
 	private MCTSNode select(MCTSNode node) {
-		// move down while fully expanded and there are children and no terminal
 		while (node.isFullyExpanded() && !node.children.isEmpty() && !node.isTerminal())  {
 			node = bestUCT(node);
 		}
@@ -347,7 +334,7 @@ public class MonteCarlosTreeSearch {
 	        if (BoardSearcher.countSOS(board, cell.row(), cell.col(), 'S') > 0) {
 	            return new Move(cell.row(), cell.col(), 'S');
 	        }
-	       // check Y
+	       // check O
 	        if (BoardSearcher.countSOS(board, cell.row(), cell.col(), 'O') > 0) {
 	            return new Move(cell.row(), cell.col(), 'O');
 	        }

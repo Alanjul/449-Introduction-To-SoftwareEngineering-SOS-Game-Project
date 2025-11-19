@@ -1,4 +1,4 @@
-package sprint4.Util;
+package sprint4.util;
 
 import java.awt.Color;
 import java.util.ArrayList;

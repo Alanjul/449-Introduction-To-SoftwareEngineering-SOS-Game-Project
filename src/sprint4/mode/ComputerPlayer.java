@@ -2,9 +2,9 @@ package sprint4.mode;
 import java.util.List;
 import java.util.Random;
 
-import sprint4.Util.BoardSearcher;
 import sprint4.mode.Board;
 import sprint4.mode.Board.Cell;
+import sprint4.util.BoardSearcher;
 
 public class ComputerPlayer extends Player {
 
