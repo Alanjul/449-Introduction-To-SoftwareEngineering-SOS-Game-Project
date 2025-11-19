@@ -222,9 +222,8 @@ public class SOSGameController {
 		// Switch to opposite
 		playerColor = (playerColor == Color.BLUE) ? Color.RED : Color.BLUE;
 
-		// update the cell
+		
 		panel.getBoardPanel().updateCell(row, col, letter, playerColor);
-		// Update lines
 		panel.getBoardPanel().updateSosLines(game.getLineFormed());
 
 		// check if the game is over
@@ -232,7 +231,6 @@ public class SOSGameController {
 			handleGameOver();
 			return;
 		}
-		// Update status
 		updateStatus();
 
 		// schedule computer

@@ -161,7 +161,7 @@ public class GameBoardPanel extends JPanel{
 		Graphics2D  g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//set the thickness of the line
-		g2d.setStroke(new BasicStroke(3.0f)); // set the thickness of the line draw
+		g2d.setStroke(new BasicStroke(3.0f)); 
 		
 		//draw the line
 		for (LineSegment4 line : sosLinesFormed)
