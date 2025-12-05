@@ -48,9 +48,9 @@ public class MonteCarlosTreeSearch {
 	/* Get the iteration based on difficulty level */
 	private int determineIteration(ComputerPlayer.LevelsOfDifficulty difficulty) {
 		return switch (difficulty) {
-		case MEDIUM -> 1600;
-		case HARD -> 8000;
-		case EXPERT -> 25000;
+		case MEDIUM -> 16000;
+		case HARD -> 80000;
+		case EXPERT -> 200000;
 		case RANDOM, EASY -> throw new IllegalArgumentException(
 	            "MCTS should only be used for MEDIUM, HARD, and EXPERT. " +
 	            "Got: " + difficulty + ". " +
@@ -255,6 +255,14 @@ public class MonteCarlosTreeSearch {
 	//Prefer moves that form SOS, otherwise random
 	private Move selectSimulationMove(Board board)
 	{
+		if(random.nextDouble() < 0.9)
+		{
+			Move scoringMove = findScoringMove(board);
+			if(scoringMove != null)
+			{
+				return scoringMove;
+			}
+		}
 		List<Board.Cell> empty = board.getEmptyCells();
         Board.Cell c = empty.get(random.nextInt(empty.size()));
         char letter = random.nextBoolean() ? 'S' : 'O';
