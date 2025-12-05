@@ -24,7 +24,7 @@ public class Board2 {
 
 	/**
 	 * GetCell returns the grid cell
-	 * 
+	 *
 	 * @param row, column
 	 * @return char grid[row][colum]
 	 */

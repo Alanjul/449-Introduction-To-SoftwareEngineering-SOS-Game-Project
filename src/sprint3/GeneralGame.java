@@ -4,25 +4,29 @@ public class GeneralGame extends Game {
 	private char winner; // winner or draw
 	private int blueScore;
 	private int redScore;
-	
+
 	public GeneralGame(Board3 board)
 	{
 		super(board, GameMode3.GENERAL);
 		blueScore = 0;
 		redScore = 0;
 		winner = '\0';
-		
+
 	}
-	
+
 	@Override
 	public  void makeMove(int row, int col, char letter)
 	{
-		
-		if(gameOver) return ;
+
+		if(gameOver) {
+			return ;
+		}
 		boolean currentMove = board.makeMove(row, col, letter);
 		//if the move is not successful;
-		if(!currentMove) return;
-		
+		if(!currentMove) {
+			return;
+		}
+
 		int sosCount = board.checkSOS(row, col);
 		if (sosCount  > 0)
 		{
@@ -33,7 +37,7 @@ public class GeneralGame extends Game {
 			{
 				redScore += sosCount;
 			}
-			
+
 		}else
 		{
 			switchTurn(); // game continue
@@ -52,7 +56,7 @@ public class GeneralGame extends Game {
 				winner = '\0'; // draw
 			}
 		}
-		
+
 	}
 
 	// reset the game
@@ -64,7 +68,7 @@ public class GeneralGame extends Game {
 		redScore = 0;
 		blueScore = 0;
 	}
-	
+
 	@Override
 	public  char checkWinner()
 	{
@@ -94,7 +98,7 @@ public class GeneralGame extends Game {
 		return winner;
 	}
 
-	
+
 	public int getBlueScore() {
 		return blueScore;
 	}

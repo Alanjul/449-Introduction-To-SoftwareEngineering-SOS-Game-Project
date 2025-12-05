@@ -1,28 +1,30 @@
 package sprint4Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.awt.Color;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint4.mode.*;
+import sprint5.mode.GameMode.GameMode4;
+import sprint5.mode.GameMode.SimpleGame4;
+import sprint5.mode.board.Board;
+import sprint5.mode.board.Board4;
+import sprint5.mode.humanplayer.HumanPlayer;
+import sprint5.mode.move.Move;
+import sprint5.mode.player.Player;
 
 
 
 public class SimpleGame4Test {
-	
-	
+
+
 	private SimpleGame4 game;
 	private Board board;
 	private Player redPlayer;
 	private Player bluePlayer;
-	
+
 	@Before
 	public void setUp() throws Exception
 	{
@@ -30,9 +32,9 @@ public class SimpleGame4Test {
 		bluePlayer = new HumanPlayer('B', "Blue player",'S');
 		redPlayer = new HumanPlayer ('R', "Red Player", 'O');
 		game = new SimpleGame4(board, bluePlayer, redPlayer);
-		
+
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		board = null;
@@ -40,7 +42,7 @@ public class SimpleGame4Test {
 		redPlayer = null;
 		bluePlayer = null;
 	}
-	
+
 	@Test
 	public void testInitialization()
 	{
@@ -51,7 +53,7 @@ public class SimpleGame4Test {
 		assertEquals(0, game.getBlueScore());
 		assertEquals(0, game.getRedScore());
 	}
-	
+
 	@Test
 	public void testSwitchTurns()
 	{
@@ -88,7 +90,7 @@ public class SimpleGame4Test {
 	{
 		char [][]moves = { {'S', 'O', 'S', 'O'},
 				{'O', 'S', 'O', 'S'},
-				
+
 				{'S', 'O', 'S', 'O'},
 				{'O', 'S', 'O', 'S'}
 		};
@@ -111,7 +113,7 @@ public class SimpleGame4Test {
 		assertEquals(redPlayer, game.getCurrentPlayer());
 		assertEquals(bluePlayer, game.getOpponent());
 	}
-	
+
 	//Testing Sos Lines
 	@Test
 	public void testSOSLines()
@@ -119,7 +121,7 @@ public class SimpleGame4Test {
 		assertTrue(game.getLineFormed().isEmpty());// check if no sos line formed
 		char [][]moves = { {'S', 'O', 'S', 'O'},
 				{'S', 'S', 'S', 'S'},
-				
+
 				{'S', 'S', 'S', 'S'},
 				{'O', 'S', 'S', 'O'}
 		};
@@ -129,6 +131,6 @@ public class SimpleGame4Test {
 			}
 		}
 		assertEquals(1, game.getLineFormed().size());
-		
+
 	}
 }

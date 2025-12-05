@@ -17,10 +17,11 @@ public class Board1{
 	 * @param row, column
 	 * @return char grid[row][colum] or  '-' if invalid numbers are provided*/
 	public char getCell(int row, int column) {
-		if (row >= 0 && row < size && column >= 0 && column < size)
+		if (row >= 0 && row < size && column >= 0 && column < size) {
 			return grid[row][column];
-		else 
+		} else {
 			return '-';
+		}
 	}
 
 	//returns the turn
@@ -32,15 +33,16 @@ public class Board1{
 		return grid.length;
 	}
 	 public void setCell(int row, int col, char value) {
-		 if(row >= 0 && row < size && col >= 0 && col < size)
-	        grid[row][col] = value;
+		 if(row >= 0 && row < size && col >= 0 && col < size) {
+			grid[row][col] = value;
+		 }
 	    }
-	
-//switch other player 
+
+//switch other player
 	 public void switchTurn()
 	 {
 		 turn = (turn == 'S') ? 'O' : 'S';
 	 }
 
-	 
+
 }

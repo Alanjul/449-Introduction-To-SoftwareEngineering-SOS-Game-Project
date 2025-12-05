@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class Board3 {
-	
+
 	private char[][] grid;
 	private  int size;
 	private List<LineSegment>sosLineFormed ; // stores the SOS line formed
@@ -23,12 +23,12 @@ public class Board3 {
 
 	/**
 	 * GetCell returns the grid cell
-	 * 
+	 *
 	 * @param row, column
 	 * @return char grid[row][colum]
 	 */
 	public char getCell(int row, int column) {
-		
+
 		if (!(checkValidRowsAndColumns(row, column))) {
 			return '\0';
 		}
@@ -51,7 +51,7 @@ public class Board3 {
 		}
 
 		grid[row][col] = letter;
-		
+
 		return true;
 
 	} // end of make move method
@@ -61,7 +61,7 @@ public class Board3 {
 			Arrays.fill(grid[i], '\u0000');//clear the grid
 		}
 		sosLineFormed.clear();//removes all the lines formed
-		
+
 	}
 
 //find if the grid is full
@@ -72,12 +72,14 @@ public class Board3 {
 			for(int j = 0; j < size; j++)
 			{
 				//check if empty
-				if(grid[i][j] == '\u0000') return false;
+				if(grid[i][j] == '\u0000') {
+					return false;
+				}
 			}
 		}
 		return true;//grid is full
 	}
-	
+
 	//check if SOS is created
 	public int checkSOS( int row, int col)
 	{
@@ -85,10 +87,11 @@ public class Board3 {
 		// store the letters
 		char letter = grid[row][col];
 		// check if the grid has no letter
-		if (letter == '\u0000')
+		if (letter == '\u0000') {
 			return 0;
+		}
 		// define directions
-		int[][] directions = { 
+		int[][] directions = {
 				{ 1, 0 }, // down {south}
 				{ 0, 1 }, // east
 				{ -1, 0 }, // up {north}
@@ -115,7 +118,7 @@ public class Board3 {
 			} // end of for statement
 
 		} else if (letter == 'O') {
-			
+
 			for (int[] axis : directions) {
 				int row1 = row - axis[0];
 				int col1 = col - axis[1];
@@ -132,7 +135,7 @@ public class Board3 {
 	return count;
 
 	}//end of the methoth
-	
+
 	// helper method to check for valid row and col
 	private  boolean checkValidRowsAndColumns(int row, int col) {
 		return row >= 0 && row < size && col >= 0 && col < size;
@@ -143,7 +146,7 @@ public class Board3 {
 		return size;
 	}
 
-	
+
 	//returns all sos
 	public List<LineSegment> getSosLineFormed() {
 		return sosLineFormed;
@@ -152,7 +155,7 @@ public class Board3 {
 	public void setSosLineFormed(List<LineSegment> sosLineFormed) {
 		this.sosLineFormed = sosLineFormed;
 	}
-	
+
 	//add sos
 	public void addSosLine(LineSegment line)
 	{
@@ -161,13 +164,13 @@ public class Board3 {
 			sosLineFormed.add(line);
 		}
 	}
-	
+
 	//clear the sos formed once down playing the game
 	public void clearSosLines()
 	{
 		sosLineFormed.clear();
 	}
-	
+
 	public  int getSOSLineSize()
 	{
 		return sosLineFormed.size();

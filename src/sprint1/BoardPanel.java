@@ -23,7 +23,7 @@ import javax.swing.SpinnerNumberModel;
 
 public class BoardPanel extends JPanel {
 	private int gridSize; // create grid size
-	private static final int CELL_SIZE = 60; 
+	private static final int CELL_SIZE = 60;
 	private JPanel topPanel, bottomPanel, gamePanel;
 	private JLabel label, currentLabel;
 	private JSpinner boardSpinner;
@@ -33,7 +33,7 @@ public class BoardPanel extends JPanel {
 	private boolean simpleGameSelected = true;
 	private Board1 board;
 	private BoardGameGui parent;
-	
+
 	public BoardPanel(BoardGameGui parent,Board1 board)
 	{
 		this.parent = parent;
@@ -42,27 +42,27 @@ public class BoardPanel extends JPanel {
 		//this.setBackground(Color.WHITE);
 		//create board layout
 		this.setLayout(new BorderLayout());
-		
-		
+
+
 		//initialize top panel
 		topPanel =createTopPanel();
 		this.add(topPanel, BorderLayout.NORTH);
-		
-		
+
+
 		//initialize buttom panel
 		bottomPanel =createBottomPanel();
 		this.add(bottomPanel, BorderLayout.SOUTH);
-		
-		
+
+
 		setupBoardPanel();
 		add(gamePanel, BorderLayout.CENTER);
 		JPanel bluePlayerPanel = createPlayerPanel("Blue player", true);
 		this.add(bluePlayerPanel, BorderLayout.WEST);
-		
+
 		JPanel redPlayerPanel = createPlayerPanel("Red player", false);
 		this.add(redPlayerPanel, BorderLayout.EAST);
-		
-		
+
+
 	}
 
 	private JPanel createTopPanel()
@@ -77,22 +77,22 @@ public class BoardPanel extends JPanel {
 		ButtonGroup button = new ButtonGroup();
 		simpleGameButton = new JRadioButton("Simple Game", true);
 		generalGameButton = new JRadioButton("General Game");
-		
+
 		button.add(simpleGameButton);
 		button.add(generalGameButton);
 		//add selection listener
 		ActionListener buttonListener= e -> {
 			simpleGameSelected = simpleGameButton.isSelected();
 			resetGame(gridSize);
-			
+
 		};
 		//add action listeners
 		simpleGameButton.addActionListener(buttonListener);
 		generalGameButton.addActionListener(buttonListener);
-		
+
 		panel.add(simpleGameButton);
 		panel.add(generalGameButton);
-		
+
 		//Board size and spinner
 		panel.add(new JLabel("Board Size: "));
 		boardSpinner = new JSpinner(new SpinnerNumberModel(gridSize,3, 15, 1));
@@ -101,19 +101,19 @@ public class BoardPanel extends JPanel {
 			gridSize = (Integer) boardSpinner.getValue();
 			resetGame(gridSize);
 		});
-		
+
 		//add to panel
 		panel.add(boardSpinner);
-		
+
 		return panel;
 	}
-	
+
 	//rest Game
 	public  void resetGame(int size)
 	{
 		this.gridSize = size;
 	   this.board = new Board1(size);
-	   
+
 	   int newSize = size * CELL_SIZE;
 	   gamePanel.setPreferredSize(new Dimension(newSize, newSize));
 	   gamePanel.revalidate();// re-layout if needed
@@ -121,8 +121,8 @@ public class BoardPanel extends JPanel {
 	   parent.resetBoard();//resize the parent panel
 	   updateCurrentTurn();
 	}
-	
-	
+
+
 	public void paintBoard(Graphics g)
 	{
 		gridSize = board.getGridSize();
@@ -142,7 +142,7 @@ public class BoardPanel extends JPanel {
 			g.drawLine(0, y_cordinate, panelWidth, y_cordinate);
 		}
 	}
-	
+
 	private void setupBoardPanel() {
 	    gamePanel = new JPanel() {
 	        @Override
@@ -159,68 +159,68 @@ public class BoardPanel extends JPanel {
 	    };
 
 	    gamePanel.setBackground(Color.WHITE);
-	    
+
 	}
-	
+
 
 	 private JPanel createBottomPanel()
 	 {
 		 JPanel bottom = new JPanel(new BorderLayout());
-		 
+
 		 //spacing
 		 bottom.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
-		 
+
 		 JCheckBox recordCheck =  new JCheckBox("Record Game");
 		 recordCheck.setFont(new Font ("Arial", Font.BOLD,14));
 		 JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		 leftPanel.add(recordCheck);
 		  bottom.add(leftPanel, BorderLayout.WEST);
-		 
+
 			JPanel rightPanel = new JPanel(new FlowLayout());
 			rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 			rightPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-			
+
 			JButton replayGame = new JButton("Replay Game ");
 			replayGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 			replayGame.addActionListener(e -> resetGame(gridSize));
 			rightPanel.add(replayGame);
-			
+
 			//create vertical spacing
 			rightPanel.add(Box.createVerticalStrut(5));
-			
+
 			//center the turn label
 			currentLabel = new JLabel("Current Turn: Blue (or Red)");
 			currentLabel.setFont(new Font("Arial", Font.BOLD, 14));
 			JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 			centerPanel.add(currentLabel);
 			bottom.add(centerPanel, BorderLayout.CENTER);
-			
+
 			JButton gameButton = new JButton("New Game");
 			gameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 			gameButton.addActionListener(e -> resetGame(gridSize));
 			rightPanel.add(gameButton);
-			
+
 			bottom.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			bottom.add(rightPanel, BorderLayout.EAST);
-		 
+
 		 return bottom;
 	 }
-	 
-	
-	 
-	 
-	 
+
+
+
+
+
 	 private JPanel createPlayerPanel(String player, boolean isBlue)
 	 {
 		 JPanel panel = new JPanel();
 		 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		 panel.setBorder(BorderFactory.createTitledBorder(player));
 		 panel.setPreferredSize(new Dimension(120,200));
-		 
+
 		 ButtonGroup button = new ButtonGroup();
 		 JRadioButton sTurnButton = new JRadioButton("S", true);
 		 JRadioButton oTurnButton = new JRadioButton("O", false);
-		 
+
 		 //adding radio button to buttonGroup
 		 button.add(sTurnButton);
 		 button.add(oTurnButton);
@@ -238,10 +238,10 @@ public class BoardPanel extends JPanel {
 	     panel.add(Box.createRigidArea(new Dimension(0, 10)));
 	     panel.add(oTurnButton);
 	     panel.add(Box.createVerticalGlue());
-		 
+
 		 return panel;
 	 }
-	 
+
 	 //helper method for current turn label
 	 private void updateCurrentTurn()
 	 {
@@ -250,25 +250,25 @@ public class BoardPanel extends JPanel {
 			 currentLabel.setText("Current Turn: Blue");
 		 }
 	 }
-	 
-	 
+
+
 	 //Getters
 	 public boolean isSimpleGameSelected() {
 			return simpleGameSelected;
 		}
-		
+
 		public char getBluePlayerChoice() {
 			return blueS.isSelected() ? 'S' : 'O';
 		}
-		
+
 		public char getRedPlayerChoice() {
 			return redS.isSelected() ? 'S' : 'O';
 		}
-		
+
 		public Board1 getBoard() {
 			return board;
 		}
-	 
+
 }
 
 

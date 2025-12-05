@@ -1,21 +1,21 @@
 package sprint3Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 
 import sprint3.Board3;
 import sprint3.Game;
 import sprint3.SimpleGame;
 
 public class TestingMoves {
-	
+
 	private Board3 board;
 	private Game game;
-	
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -32,7 +32,7 @@ public class TestingMoves {
 	// acceptance criterion 2.1
 	@Test
 	public void testCrossTurnMoveVacantCell() {
-		
+
 		game.makeMove(0, 0, 'S');
 		assertEquals('S', board.getCell(0, 0));
 		assertEquals('R', game.getCurrentTurn());
@@ -45,21 +45,21 @@ public class TestingMoves {
 		assertEquals('S', board.getCell(0, 0));
 		//Red player s turn
 		assertEquals('R', game.getCurrentTurn() );//red turn
-		
+
 		//red player playes
 		game.makeMove(1, 0, 'O'); // O moves at 1, 0
 		assertEquals('O', board.getCell(1, 0));
 		assertEquals('B', game.getCurrentTurn() );//Blue player turn
-		
-		
+
+
         //blue attempts to overwrite
 		boolean move = board.makeMove(1, 0, 'S');
 		//attempting to override
 		assertFalse(move);// check if move was made
 		assertEquals('O', board.getCell(1, 0));
 		assertEquals('B',game.getCurrentTurn()); //Blue player turn but should not switch
-		
+
 	}
-		
+
 
 }

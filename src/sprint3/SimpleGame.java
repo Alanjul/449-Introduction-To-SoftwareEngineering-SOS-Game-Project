@@ -1,21 +1,25 @@
 package sprint3;
 
 public class SimpleGame extends Game {
-	
+
 	private char winner = '\0'; //B for Blue player and R for red player,  '\0' no winner yet
 	public SimpleGame(Board3 board)
 	{
 		super(board, GameMode3.SIMPLE);
 	}
-	
+
 	@Override
 	public void makeMove(int row, int col, char letter)
 	{
-		if(gameOver) return;
+		if(gameOver) {
+			return;
+		}
 		boolean currentMove =  board.makeMove(row, col, letter);
-		
+
 		//already filled
-		if(!currentMove) return;
+		if(!currentMove) {
+			return;
+		}
 		int sosCount = board.checkSOS(row, col); //checking is SOS is formed
 		if (sosCount > 0)
 		{
@@ -32,7 +36,7 @@ public class SimpleGame extends Game {
 		}
 		switchTurn(); // if no win and the board is not full
 	}
-	@Override 
+	@Override
 	public char checkWinner()
 	{
 		return winner;
@@ -45,7 +49,7 @@ public class SimpleGame extends Game {
 		gameOver = false;
 		winner = '\0';
 	}
-	
+
 	@Override
 	public String getGameResult()
 	{

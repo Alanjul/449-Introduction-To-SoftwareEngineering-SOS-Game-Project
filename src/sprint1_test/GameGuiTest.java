@@ -1,5 +1,5 @@
 package sprint1_test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
@@ -14,16 +14,16 @@ import sprint1.BoardGameGui;
 
 
 public class GameGuiTest {
-	
+
 private BoardGameGui gameGui;
 private Board1 board;
-	
+
 	@Before
 	public void setUp() throws IOException
 	{
 		board = new Board1(8);
 	}
-	
+
 	@After
 	public void tearDown() throws IOException
 	{
@@ -33,7 +33,7 @@ private Board1 board;
 		}
 		board = null;
 	}
-	
+
 	@Test
 	public void testBoardGameGui()
 	{

@@ -1,7 +1,7 @@
 package sprint1_test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class BoardPanelTest {
 
 	private BoardPanel boardPanel;
 	private Board1 board;
-	
+
 	@Before
 	public void setUp()
 	{

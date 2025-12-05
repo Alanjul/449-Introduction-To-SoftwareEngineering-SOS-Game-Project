@@ -7,18 +7,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
-import sprint4.mode.*;
+import sprint5.mode.GameMode.SimpleGame4;
+import sprint5.mode.board.Board;
+import sprint5.mode.board.Board4;
+import sprint5.mode.humanplayer.HumanPlayer;
+import sprint5.mode.move.Move;
+import sprint5.mode.move.MoveResult;
+import sprint5.mode.player.Player;
 
 
 public class TestMoves {
-	
+
 	private Board board;
 	private SimpleGame4 game;
 	private Player bluePlayer;
 	private Player redPlayer;
-	
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,7 +41,7 @@ public class TestMoves {
 	// acceptance criterion 2.1
 	@Test
 	public void testCrossTurnMoveVacantCell() {
-		
+
 		game.makeMove(new Move(0, 0, 'S'));
 		assertEquals('S', board.getCell(0, 0));
 		assertEquals('R', game.getCurrentTurn());
@@ -50,20 +54,20 @@ public class TestMoves {
 		assertEquals('S', board.getCell(0, 0));
 		//Red player s turn
 		assertEquals('R', game.getCurrentTurn() );//red turn
-		
+
 		//red player playes
 		game.makeMove(new Move(1, 0, 'O')); // O moves at 1, 0
 		assertEquals('O', board.getCell(1, 0));
 		assertEquals('B', game.getCurrentTurn() );//Blue player turn
-		
-		
+
+
         //blue attempts to overwrite
 		MoveResult move = game.makeMove(new Move(1, 0, 'S'));
 		//attempting to override
 		assertFalse(move.isSuccess());// check if move was made
 		assertEquals('O', board.getCell(1, 0));
 		assertEquals('B',game.getCurrentTurn()); //Blue player turn but should not switch
-		
+
 	}
 
 }

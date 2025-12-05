@@ -1,26 +1,25 @@
 package sprint4Test;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
-import sprint4.mode.Board;
-import sprint4.mode.Board4;
-import sprint4.mode.Game4;
-import sprint4.mode.HumanPlayer;
-import sprint4.mode.Player;
-import sprint4.mode.SimpleGame4;
-import sprint4.view.GameFrame;
+import sprint5.mode.GameMode.Game4;
+import sprint5.mode.GameMode.SimpleGame4;
+import sprint5.mode.board.Board;
+import sprint5.mode.board.GameBoard5;
+import sprint5.mode.humanplayer.HumanPlayer;
+import sprint5.mode.player.Player;
+import sprint5.view.GameFrame;
 
 
 
 
 public class GuiTest4 {
-	
-	
+
+
 		private Board board;
 		private Game4 game;
 		private GameFrame gui;
@@ -33,13 +32,15 @@ public class GuiTest4 {
 			redPlayer = new HumanPlayer ('R', "Red Player", 'O');
 			game = new SimpleGame4(board, bluePlayer, redPlayer);
 			gui = new GameFrame();
-			
+
 		}
 
 		@After
 		public void tearDown() throws Exception {
-			
-			if(gui != null) gui.dispose(); // close after test
+
+			if(gui != null) {
+				gui.dispose(); // close after test
+			}
 			board = null;
 			bluePlayer = null;
 			redPlayer = null;
@@ -57,9 +58,9 @@ public class GuiTest4 {
 				e.printStackTrace();
 			}
 		}
-		
+
 		public void testInvalidBoard() {
-			board = new Board4(2);
+			board = new GameBoard5(2);
 			gui = new GameFrame();
 			gui.setVisible(true);
 			assertNotNull("MainPanel should be initialized", gui.getMainPanel());

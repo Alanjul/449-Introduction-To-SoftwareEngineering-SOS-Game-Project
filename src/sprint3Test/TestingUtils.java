@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 /**TestingUtils to test non-public fields*/
 public class TestingUtils {
-	
+
 	//Helper to retrieve private methods during testing
 	@SuppressWarnings("unchecked") //don't show warning
 	public static <T> T getField(Object obj, String fieldName)

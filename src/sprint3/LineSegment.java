@@ -11,7 +11,7 @@ public class LineSegment {
 		this.startCol = startCol;
 		this.endCol = endCol;
 		this.color = color;
-		
+
 	}
 	public Color getColor() {
 		return color;
@@ -19,18 +19,18 @@ public class LineSegment {
 	public int getStartRow() {
 		return startRow;
 	}
-	
+
 	public int getEndRow() {
 		return endRow;
 	}
-	
+
 	public int getStartCol() {
 		return startCol;
 	}
 	public int getEndCol() {
 		return endCol;
 	}
-	
-	
+
+
 
 }

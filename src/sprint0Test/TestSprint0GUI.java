@@ -11,19 +11,19 @@ import sprint0.Sprint0BoardGame;
 
 public class TestSprint0GUI {
 	private BoardGame game;
-	
+
 	@Before
 	public void setUp() throws IOException
 	{
 		game = new BoardGame(8);
 	}
-	
+
 	@After
 	public void tearDown() throws IOException
 	{
 		game = null;
 	}
-	
+
 	@Test
 	public void testBoardGameGui()
 	{

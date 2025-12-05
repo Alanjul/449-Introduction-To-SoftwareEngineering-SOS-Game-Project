@@ -13,7 +13,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -29,12 +28,12 @@ public class BoardPanel2 extends JPanel {
 	private JSpinner boardSpinner;
 	private JRadioButton simpleGameButton, generalGameButton;
 	private JRadioButton blueS, blueO, redS, redO;
-	
+
 	// default mode
 	private boolean simpleGameSelected = true;
 	private BoardGui parent;
 	public BoardPanel2(BoardGui parent, Board2 board) {
-		this.board = board;
+		BoardPanel2.board = board;
 		this.parent = parent;
 
 		this.gridSize = board.getSize(); // initialize gridsize
@@ -47,7 +46,7 @@ public class BoardPanel2 extends JPanel {
 		add(topPanel, BorderLayout.NORTH);
 		setUpBoard();
 		add(gamePanel, BorderLayout.CENTER);
-		
+
 		//blue player side
 		JPanel bluePanel =  createPlayerPanel("Blue Player", true);
 		add(bluePanel, BorderLayout.WEST);
@@ -67,7 +66,7 @@ public class BoardPanel2 extends JPanel {
 		label = new JLabel("SOS Game");
 		label.setFont(new Font("Arial", Font.BOLD, 16));
 		panel.add(label);
-		
+
 		// Game mode Button ratio
 		ButtonGroup modelGroup = new ButtonGroup();
 		simpleGameButton = new JRadioButton("Simple Game", true);
@@ -106,15 +105,15 @@ public class BoardPanel2 extends JPanel {
 
 	public void resetGame(int size) {
 		this.gridSize = size;
-		this.board = new Board2(size, simpleGameSelected ? GameMode.SIMPLE : GameMode.GENERAL);
+		BoardPanel2.board = new Board2(size, simpleGameSelected ? GameMode.SIMPLE : GameMode.GENERAL);
 		if (gamePanel != null) {
 	        remove(gamePanel);
 		}
 	    setUpBoard(); //rebuild the panle
-	    
+
 	    //add the grid back to layout
 	    add(gamePanel, BorderLayout.CENTER);
-	  
+
 	    //update the layout
 	    revalidate();
 	    repaint();
@@ -171,18 +170,18 @@ public class BoardPanel2 extends JPanel {
 		// create the board layout
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				
+
 				//get the current current
-				 char current = board.getCell(i, j); 
+				 char current = board.getCell(i, j);
 				JButton cellButton = new JButton(current== '\0'?"": String.valueOf(current));
-				
-				cellButton.setFocusPainted(false);                
-				cellButton.setContentAreaFilled(false);              
-				cellButton.setOpaque(true);                          
-				cellButton.setBackground(Color.WHITE);               
+
+				cellButton.setFocusPainted(false);
+				cellButton.setContentAreaFilled(false);
+				cellButton.setOpaque(true);
+				cellButton.setBackground(Color.WHITE);
 				cellButton.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 				cellButton.setFont(new Font("Arial", Font.BOLD, 20));
-				
+
 
 				final int row = i, col = j;
 				cellButton.addActionListener(e -> handleClick(row, col, cellButton));//add action Listener
@@ -199,13 +198,13 @@ public class BoardPanel2 extends JPanel {
 			btn.setText(String.valueOf(selected));
 	        btn.setFont(new Font("Arial", Font.BOLD, 22));
 	        if (board.getTurn() == 'S') { // Blue player's turn
-	            btn.setForeground(Color.BLUE); 
+	            btn.setForeground(Color.BLUE);
 	            currentLabel.setText("Red's turn (O)");
 	        } else { // Red player's turn
 	            btn.setForeground(Color.RED); // red text
 
 	            currentLabel.setText("Blue's turn (S)");
-	           
+
 	        }
 	        board.makeMove(row, col, selected);
 	        btn.setEnabled(false);
@@ -232,9 +231,9 @@ public class BoardPanel2 extends JPanel {
 		char current = board.getTurn();
 		currentLabel.setText("Current turn: blue (or red)" + (current == 'S' ? " Blue's turn" : " Red's turn"));
 	}
-	
 
 
-	
+
+
 
 }

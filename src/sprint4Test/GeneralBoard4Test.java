@@ -8,7 +8,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint4.mode.*;
+import sprint5.mode.GameMode.GameMode4;
+import sprint5.mode.GameMode.GameState;
+import sprint5.mode.GameMode.GeneralGame4;
+import sprint5.mode.board.Board;
+import sprint5.mode.board.GameBoard5;
+import sprint5.mode.humanplayer.HumanPlayer;
+import sprint5.mode.move.Move;
+import sprint5.mode.player.Player;
 
 
 
@@ -21,7 +28,7 @@ public class GeneralBoard4Test {
 
 	@Before
 	public void setUp() throws Exception {
-		board = new Board4(4);
+		board = new GameBoard5(4);
 		bluePlayer = new HumanPlayer('B', "Blue player", 'S');
 		redPlayer = new HumanPlayer('R', "Red Player", 'O');
 		game = new GeneralGame4(board, bluePlayer, redPlayer);
@@ -45,7 +52,7 @@ public class GeneralBoard4Test {
 		assertEquals(0, game.getBlueScore());
 		assertEquals(0, game.getRedScore());
 	}
-	
+
 	// test full board'
 		 @Test
 		  public void testGameNotOverBoard()
@@ -63,16 +70,16 @@ public class GeneralBoard4Test {
 				  }
 			  }
 			  assertFalse(game.isGameOver());
-			  
+
 		  }
-		  
+
 		  @Test
 		  public void testResetGame()
 		  {
 			  //play moves
 			  game.makeMove(new Move(0, 0, 'S'));
 			  game.makeMove(new Move(0, 1, 'O'));
-			  
+
 			  //reset
 			  game.resetGame();
 			  assertEquals(0, game.getBlueScore());
@@ -80,7 +87,7 @@ public class GeneralBoard4Test {
 			  assertEquals('B', game.getCurrentTurn());
 		      assertFalse(game.isGameOver());
 		      assertEquals('N', game.determineWinner());
-			  
+
 		  }
 		  //test for draw
 		  @Test
@@ -98,7 +105,7 @@ public class GeneralBoard4Test {
 			  game.makeMove( new Move(2, 2, 'O'));
 			  game.makeMove(new Move(1, 3, 'S'));
 			  game.makeMove(new Move(2, 3, 'O'));
-			  
+
 			  game.makeMove(new Move(3, 0, 'O'));
 			  game.makeMove(new Move(3, 1, 'O'));
 			  game.makeMove(new Move(3, 2, 'O'));
@@ -108,7 +115,7 @@ public class GeneralBoard4Test {
 			  //verify draw
 			  assertEquals( 0, game.getBlueScore());
 			  assertEquals( 0, game.getRedScore());
-			  
+
 			  assertEquals(GameState.DRAW, game.getState());
 		  }
 

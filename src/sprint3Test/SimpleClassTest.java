@@ -1,5 +1,6 @@
 package sprint3Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,20 +12,20 @@ import sprint3.SimpleGame;
 public class SimpleClassTest {
 	private SimpleGame game;
 	private Board3 board;
-	
+
 	@Before
 	public void setUp() throws Exception
 	{
 		board = new Board3(4);
 		game = new SimpleGame(board);
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		board = null;
 		game = null;
 	}
-	
+
 	@Test
 	public void testBlueWins()
 	{
@@ -32,7 +33,7 @@ public class SimpleClassTest {
 		assertTrue(game.isGameOver());
 		assertEquals("Blue Player wins", game.getGameResult());
 	}
-	
+
 	@Test
 	public void testRedWins()
 	{
@@ -59,6 +60,6 @@ public class SimpleClassTest {
 		assertTrue(game.isGameOver());
 		assertEquals("Draw", game.getGameResult());
 	}
-	
+
 
 }

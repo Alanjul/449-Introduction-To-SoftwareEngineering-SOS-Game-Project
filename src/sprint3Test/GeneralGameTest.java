@@ -1,5 +1,7 @@
 package sprint3Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +13,7 @@ import sprint3.GeneralGame;
 public class GeneralGameTest {
   private GeneralGame game;
   private Board3 board;
-  
+
   @Before
   public void setUp()throws Exception
   {
@@ -24,7 +26,7 @@ public class GeneralGameTest {
 	  board = null;
 	  game = null;
   }
-  
+
   @Test
   public void testInitialGameTest()
   {
@@ -50,14 +52,14 @@ public class GeneralGameTest {
 	  game.makeMove(2, 2, 'O');
 	  assertTrue("Game should be over when the game is filled", game.isGameOver());
   }
-  
+
   @Test
   public void testResetGame()
   {
 	  //play moves
 	  game.makeMove(0, 0, 'S');
 	  game.makeMove(0, 1, 'O');
-	  
+
 	  //reset
 	  game.reset();
 	  assertEquals(0, game.getBlueScore());
@@ -65,7 +67,7 @@ public class GeneralGameTest {
 	  assertEquals('B', game.getCurrentTurn());
       assertFalse(game.isGameOver());
       assertEquals('\0', game.getWinner());
-	  
+
   }
   //test for draw
   @Test
@@ -80,14 +82,14 @@ public class GeneralGameTest {
 	  game.makeMove(2, 0, 'O');
 	  game.makeMove(2, 1, 'O');
 	  game.makeMove(2, 2, 'S');
-	  
+
 	  //game should be full
 	  assertTrue("Game should be over when full", game.isGameOver());
 	  //verify draw
 	  assertEquals("Bule Score should be 0 in a draw", 0, game.getBlueScore());
 	  assertEquals("Bule Score should be 0 in a draw", 0, game.getRedScore());
 	  assertEquals("Winner should be null in draw", '\0', game.getWinner());
-	  
+
 	  //check message
 	  String answer = game.getGameResult();
 	  assertTrue("Result message should be draw", answer.toLowerCase().contains("draw"));

@@ -1,5 +1,5 @@
 package sprint1_test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,8 +10,8 @@ import sprint1.Board1;
 
 public class BoardTest {
 	private Board1 board;
-	
-	@Before 
+
+	@Before
 	public void setUp()
 	{
 		board = new Board1(5);
@@ -22,7 +22,7 @@ public class BoardTest {
 	{
 		board = null;
 	}
-	
+
 	@Test
 	public void testBoardInitialization()
 	{
@@ -44,7 +44,7 @@ public class BoardTest {
 		assertEquals('S', board.getCell(1, 1));
 		board.setCell(0, 2, 'O');
         assertEquals('O', board.getCell(0, 2));
-		
+
 	}
 	//test for valid cell
 	@Test
@@ -55,7 +55,7 @@ public class BoardTest {
 		assertEquals('-', board.getCell(0, 5));//column greater or equal to size
 		assertEquals('-', board.getCell(5, 0)); // row greater or equal to size
 	}
-	
+
 	@Test
 	//testing for switch turn
 	public void switchTurnTest()

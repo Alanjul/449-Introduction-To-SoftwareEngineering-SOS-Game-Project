@@ -5,7 +5,7 @@ public abstract class Game {
 	protected boolean gameOver;
 	private GameMode3  mode;
 	protected char currentTurn ;
-	
+
 	public Game(Board3 board, GameMode3 mode)
 	{
 		this.board = board; //instantiate the board
@@ -13,8 +13,8 @@ public abstract class Game {
 		this.mode = mode;
 		this.gameOver = false; //not started
 	}
-	
-	
+
+
 	//check if the game is over
 	public boolean isGameOver()
 	{
@@ -25,8 +25,8 @@ public abstract class Game {
 	{
 		currentTurn = (currentTurn == 'B' ? 'R' : 'B');
 	}
-	
-	
+
+
 	public char getCurrentTurn() {
 		return currentTurn;
 	}
@@ -64,7 +64,7 @@ public abstract class Game {
 
 	public abstract void makeMove(int row, int col, char letter);
 	public abstract char checkWinner();
-	
+
 	public abstract String getGameResult();
 
 

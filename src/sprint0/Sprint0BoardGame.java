@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 //This is the initial set up of the board game
 
@@ -44,16 +44,16 @@ public class Sprint0BoardGame extends JFrame {
 
 	private ButtonGroup group = new ButtonGroup(); //instance of the buttonGroup
 	private JLabel label;//declare the JLabel
-	
+
 	private JCheckBox checkBox = new JCheckBox(); //instantiate the checkBox
 
 	// Constructor
 	public Sprint0BoardGame(BoardGame game) {
 		this.game = game;
-		
+
 		// create frame structure
 		frame.setTitle("Welcome to SOS Game");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.setPreferredSize(new Dimension(600,600));
 		// Create jspinner
@@ -65,7 +65,7 @@ public class Sprint0BoardGame extends JFrame {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				paintBoard(g);
-				
+
 			}
 
 		};
@@ -77,11 +77,11 @@ public class Sprint0BoardGame extends JFrame {
 		spinner.addChangeListener(e -> {
 			int newSize = (int) spinner.getValue();
 			panel.setPreferredSize(new Dimension(gridSize * CELL_SIZE, gridSize * CELL_SIZE));
-			
+
 			//reset the board game
 			game.setGridSize(newSize);
 			game.setBoard(new char[newSize][newSize]);
-			
+
 			// layout the panel again
 			updatePanelSize();
 			// repaint the panel with new grid
@@ -104,11 +104,11 @@ public class Sprint0BoardGame extends JFrame {
 
 		// add label to panel
 		panel.add(label);
-		
+
 		//check  box
 		checkBox.setText("Enable Drawing");
 		checkBox.setSelected(true);
-	
+
 		//add to topPanel
 		topPanel.add(checkBox);
 		topPanel.add(label);
@@ -119,16 +119,16 @@ public class Sprint0BoardGame extends JFrame {
 
 		//add label to the westPanel
 		westPanel.add(new JLabel("Blue Player"));
-		
+
 		//add label
 		eastPanel.add(new JLabel("Red Player"));
 
 		//add label to the bottom panel
 		bottomPanel.add(new JLabel("Current turn: blue (or red)"));
-	
+
 		// create an image icon
 		ImageIcon icon = new ImageIcon("sos.png");
-		
+
 		//add the panels to frame
 		frame.add(topPanel, BorderLayout.NORTH);
 		frame.add(scrollPane, BorderLayout.CENTER);
@@ -141,9 +141,9 @@ public class Sprint0BoardGame extends JFrame {
 		frame.setVisible(true);
 
 	}
-	
+
 	/**paintBoard method to draw the gridlayout of the boardGame
-	 * @param Graphics g to draw grid lines 
+	 * @param Graphics g to draw grid lines
 	 * @return none*/
 public void paintBoard(Graphics g)
 {
@@ -170,10 +170,10 @@ public void paintBoard(Graphics g)
 	public static void main(String[] args) {
 		BoardGame game = new BoardGame(8);
 		SwingUtilities.invokeLater(() -> new Sprint0BoardGame(game));
-		
+
 	}
 
-	
+
 	//getters
 	public BoardGame getGame() {
 		return game;
@@ -214,7 +214,7 @@ public void paintBoard(Graphics g)
 	public void setScrollPane(JScrollPane scrollPane) {
 		this.scrollPane = scrollPane;
 	}
-	
+
 	//update the panel size
 	private void updatePanelSize()
 	{
@@ -222,5 +222,5 @@ public void paintBoard(Graphics g)
 		panel.setPreferredSize(new Dimension(size, size)); //get the new dimension of the panel
 		frame.pack(); //resize the frame
 	}
-	 
+
 }

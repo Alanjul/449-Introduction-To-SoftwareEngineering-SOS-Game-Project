@@ -1,5 +1,6 @@
 package sprint2Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,11 +11,11 @@ import sprint2.BoardPanel2;
 
 
 public class BoardPanel2Test {
-	
-	
+
+
 	private BoardPanel2 boardPanel;
 	private Board2 board;
-	
+
 	@Before
 	public void setUp()
 	{

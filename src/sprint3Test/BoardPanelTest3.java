@@ -1,13 +1,16 @@
 package sprint3Test;
 
-import static org.junit.Assert.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import sprint3.Board3;
 import sprint3.BoardGui3;
@@ -25,7 +28,7 @@ private Game game;
 private BoardPanel3 panel;
 
 
-@Before 
+@Before
 public void setUp() throws Exception
 {
 	System.setProperty("Java.awt.headless", "true"); //run the test in headless mode
@@ -33,7 +36,7 @@ public void setUp() throws Exception
 	game = new SimpleGame(board) ;
 	parent = new BoardGui3(board, game);
 	parent.setVisible(false); //don't show the window
-	
+
 	panel = new BoardPanel3(parent, game, board);
 }
 
@@ -64,7 +67,7 @@ public void testBoardSizeMatchExpectedGrid()
 	assertEquals(4, grids.length);
 	assertEquals(4, grids[0].length);
 	assertNotNull(grids[3][2]); //check if the cell is initialzied
-	
+
 }
 //testing if the we can place a letter in cell and disable it
 @Test
@@ -75,12 +78,12 @@ public void testBoardCellAndPlaceLetter()
 	JButton first = cells[0][1];
 	first.doClick();
 	assertFalse(first.isEnabled());//check if the button is disabled
-	
+
 	//check if the first letter is either S or O
 	assertTrue(first.getText().equals("S") || first.getText().equals("O"));
 }
 
-//Testing for Overwrite 
+//Testing for Overwrite
 @Test
 public void testOverwrite()
 {

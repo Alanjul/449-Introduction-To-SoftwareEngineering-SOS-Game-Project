@@ -1,5 +1,6 @@
 package sprint0Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
@@ -7,19 +8,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import sprint0.BoardGame;
 
 public class TestBoardGame {
 	private BoardGame game;
-	
+
 	@Before
 	public void setUp() throws IOException
 	{
 		//run before the test method
 		game = new BoardGame(6);
 	}
-	
+
 	@After
 	public void tearDown() throws IOException
 	{
@@ -29,7 +29,7 @@ public class TestBoardGame {
 	@Test
 	public void testTurnInitializedTrue()
 	{
-		
+
 		assertTrue( "Turn should be initialized to true", game.getTurn());
 	}
 

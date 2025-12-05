@@ -20,36 +20,36 @@ public class GuiTest {
 	}
 
 	@Test
-	public void testEmptyBoard() {	
-		new BoardGui(board); 
+	public void testEmptyBoard() {
+		new BoardGui(board);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	@Test
 	public void testNonEmptyBoard() {
 		board.makeMove(0, 0, 'S');
-		board.makeMove(1, 1, 'O');		
-		new BoardGui(board); 
+		board.makeMove(1, 1, 'O');
+		new BoardGui(board);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 	public void testInvalidBoard() {
 		board = new Board2(2);
-		new BoardGui(board); 
+		new BoardGui(board);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

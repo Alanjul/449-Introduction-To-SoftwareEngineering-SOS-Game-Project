@@ -5,23 +5,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.awt.Color;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint2.GameMode;
-import sprint4.mode.*;
-import sprint4.mode.ComputerPlayer.LevelsOfDifficulty;
+import sprint5.mode.GameMode.Game4;
+import sprint5.mode.GameMode.GameMode4;
+import sprint5.mode.board.Board;
+import sprint5.mode.board.GameBoard5;
+import sprint5.mode.computerPlayer.ComputerPlayer;
+import sprint5.mode.computerPlayer.ComputerPlayer.LevelsOfDifficulty;
+import sprint5.mode.move.Move;
+import sprint5.mode.computerPlayer.ComputerStrategy;
+import sprint5.mode.player.Player;
 
 //USing mocking test to test Dependency injection principle
 
 public class OpponentPlayerTest {
-	
-	
+
+
 	static class FakeComputerStrategy implements  ComputerStrategy
 	{
 		private Move moveToReturn;
@@ -34,7 +36,7 @@ public class OpponentPlayerTest {
 			this.name = name;
 			this.moveToReturn = moveToReturn;
 		}
-		
+
 		/**
 		 * @return the moveToReturn
 		 */
@@ -75,10 +77,12 @@ public class OpponentPlayerTest {
 				ComputerPlayer.LevelsOfDifficulty difficultyLevel)
 		{
 			countCall++; //tracks number of times called
-			if(throwException) throw new RuntimeException("Computer ERROR!");
+			if(throwException) {
+				throw new RuntimeException("Computer ERROR!");
+			}
 			return moveToReturn;
 		}
-		
+
 		/**getStrategyName returns the name of the strategy*/
 	@Override
 	 public String getStrategyName()
@@ -86,13 +90,13 @@ public class OpponentPlayerTest {
 		 return name;
 	 }
 	}
-	
+
 	static class TestGame4 extends Game4 {
 	    public TestGame4(Board b, Player blue, Player red, GameMode4 mode) {
 	        super(b, blue, red, mode);
 	    }
 
-	   
+
 	    @Override
 	    protected boolean shouldSwitchTurns(int sosFormed) {
 	        return true;
@@ -102,7 +106,7 @@ public class OpponentPlayerTest {
 	    protected void checkGameOver() {
 	    }
 	}
-	
+
 	static class TestPlayer extends Player {
 	    public TestPlayer(char symbol, String name) {
 	        super(symbol, name);
@@ -110,34 +114,34 @@ public class OpponentPlayerTest {
 
 	    @Override
 	    public Move chooseMove(Board b, Player o, Game4 g) { return null; }
-		
+
 	    @Override
 		public  char chooseLetter()
 		{
 	    	return 'S';//default value
 		}
 	}
-	
+
 	private Board board;
     private TestPlayer opponent;
     private TestGame4 game;
     private FakeComputerStrategy strategy;
     private ComputerPlayer computer;
 	//Copied for chatGPT
-    @Before 
+    @Before
     public void setUp()throws Exception
     {
-    	board = new Board4(4);
-    	
+    	board = new GameBoard5(4);
+
     	//oponent player
     	opponent = new TestPlayer('R', "Opponent");
-    	
+
     	//Strategy
     	strategy = new FakeComputerStrategy("Test Computer Move", new Move(0, 0, 'S'));
-    	
+
     	//Computer player
     	computer = new ComputerPlayer('B', ComputerPlayer.LevelsOfDifficulty.MEDIUM, strategy);
-    	
+
     	//Game
     	game = new TestGame4(board, computer, opponent, GameMode4.GENERAL);
     }
@@ -172,10 +176,10 @@ public class OpponentPlayerTest {
     public void testStrategyName() {
         assertEquals("Test Computer Move", strategy.getStrategyName());
     }
-	
+
 	@Test
     public void testComputerHandlesNullMove() {
-        
+
         strategy = new FakeComputerStrategy("Test Computer Move", null);
         computer = new ComputerPlayer('B', ComputerPlayer.LevelsOfDifficulty.MEDIUM, strategy);
 
@@ -201,26 +205,26 @@ public class OpponentPlayerTest {
 			assertEquals("Level " + level + "  Strategy", 1, strategy.getCountCall());
 		}
 	}
-	
+
 	//Testing valid letters
 	@Test
 	public void testComputerChoosesValidLetter() {
 	    for (int i = 0; i < 5; i++) {
 	        char letter = computer.chooseLetter();
-	        assertTrue("Letter must be S or O", 
+	        assertTrue("Letter must be S or O",
 	                  letter == 'S' || letter == 'O');
 	    }
 	}
-	
+
 	//Testing computer player
 	@Test
 	public void testComputerPlayerIsPlayer() {
-	    
-	    Player player = computer;  
-	    
+
+	    Player player = computer;
+
 	    Move move = player.chooseMove(board, opponent, game);
 	    assertNotNull(move);
-	    
+
 	    // Verify it's still a ComputerPlayer
 	    assertTrue(player instanceof ComputerPlayer);
 	}
@@ -230,23 +234,25 @@ public class OpponentPlayerTest {
 	    Move move = computer.chooseMove(board, opponent, game);
 	    assertTrue(board.isEmpty(move.getRow(), move.getCol()));
 	}
-	
+
 	//Testing that a computer never picks occupied cell
 	@Test
 	public void testComputerAvoidsOccupiedCells() {
 	    board.makeMove(1,1,'S'); // occupy a spot
-	    
+
 	    Move move = computer.chooseMove(board, opponent, game);
-	    
+
 	    assertFalse(move.getRow() == 1 && move.getCol() == 1);
 	}
 	@Test
 	public void testComputerHandlesFullBoard() {
 	    int size = board.getSize();
 
-	    for (int r = 0; r < size; r++)
-	        for (int c = 0; c < size; c++)
-	            board.makeMove(r, c, 'S');
+	    for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++) {
+				board.makeMove(r, c, 'S');
+			}
+		}
 
 	    Move m = computer.chooseMove(board, opponent, game);
 
@@ -260,8 +266,8 @@ public class OpponentPlayerTest {
 
 	    assertTrue(p instanceof ComputerPlayer);
 	}
-	
-	
+
+
 	//Making sure the move is within the bounds
 	@Test
 	public void testComputerMoveWithinBounds() {
