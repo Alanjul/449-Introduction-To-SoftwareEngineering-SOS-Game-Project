@@ -48,9 +48,9 @@ public class MonteCarlosTreeSearch {
 	/* Get the iteration based on difficulty level */
 	private int determineIteration(ComputerPlayer.LevelsOfDifficulty difficulty) {
 		return switch (difficulty) {
-		case MEDIUM -> 16000;
-		case HARD -> 80000;
-		case EXPERT -> 200000;
+		case MEDIUM -> 1600;
+		case HARD -> 8000;
+		case EXPERT -> 20000;
 		case RANDOM, EASY -> throw new IllegalArgumentException(
 	            "MCTS should only be used for MEDIUM, HARD, and EXPERT. " +
 	            "Got: " + difficulty + ". " +
@@ -131,7 +131,7 @@ public class MonteCarlosTreeSearch {
 	private MCTSNode selectBestChildUCB(MCTSNode node) {
 		MCTSNode best = null; // initialize the best node to null
 		double bestValue = Double.NEGATIVE_INFINITY;// track the maximum value stored so far
-		// iterate through all the child node
+		
 		for (MCTSNode child : node.children) {
 			double upperConfidenceBoundValue = calculateUCB(node, child);
 			

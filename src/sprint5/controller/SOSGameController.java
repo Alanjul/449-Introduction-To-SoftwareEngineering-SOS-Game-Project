@@ -40,7 +40,7 @@ public class SOSGameController {
 	private int moveCounter;
 	private PlayerStats blueSessionStats;
 	private PlayerStats redSessionStats;
-
+    //Constructors
 	public SOSGameController(GameFrame frame, ComputerStrategy strategy)
 	{
 		this.frame = frame;
@@ -59,7 +59,7 @@ public class SOSGameController {
 
 	}
 
-	/***Constructor with dependency injection*/
+	/***Constructor */
 	public SOSGameController(GameFrame frame, Map<GameMode4, GameFactory>gameInterfaces,
 			Map<Boolean, PlayerFactory> playerInterfaces,
 			 GamePersistenceService persistence,GameStatistics statistics)
@@ -72,7 +72,7 @@ public class SOSGameController {
 			this.statistics = statistics;
 	}
 
-	/**Create game factories*/
+	/**Create game interface*/
 	private Map<GameMode4, GameFactory>createGameInterface()
 	{
 		Map<GameMode4, GameFactory>interfaces = new HashMap<>();
@@ -340,8 +340,6 @@ public class SOSGameController {
 				ComputerPlayer computer = (ComputerPlayer) game.getCurrentPlayer();
 				Player opponent = game.getOpponent(computer);
 				Board board = game.getBoard();
-				
-				// Use your actual method signature: chooseMove(board, opponent, game)
 				return computer.chooseMove(board, opponent, game);
 			}
 

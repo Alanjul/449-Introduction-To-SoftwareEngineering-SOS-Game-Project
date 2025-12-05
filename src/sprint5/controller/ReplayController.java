@@ -132,7 +132,6 @@ public class ReplayController {
 
 	/**
 	 * Get current percentage
-	 * 
 	 * @return percentage (0-100)
 	 */
 	public double getProgressPercentage() {
@@ -144,7 +143,6 @@ public class ReplayController {
 
 	/**
 	 * Get current movNumber
-	 * 
 	 * @return current move number, or 0 if at start
 	 */
 	public int getCurrentMoveNumber() {
