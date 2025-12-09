@@ -66,6 +66,7 @@ public class ReplayController {
 
 	/**
 	 * Step forward one move
+	 * 
 	 * @return the move that was played, or null if at end
 	 */
 	public GameMove stepForward() {
@@ -78,6 +79,7 @@ public class ReplayController {
 
 	/**
 	 * Step backward one move.
+	 * 
 	 * @return the move that was undone, or null if at start
 	 */
 	public GameMove stepBackward() {
@@ -91,6 +93,7 @@ public class ReplayController {
 
 	/**
 	 * Jump to a specific move
+	 * 
 	 * @param moveIndex the move index
 	 * @return true if successful
 	 */
@@ -132,6 +135,7 @@ public class ReplayController {
 
 	/**
 	 * Get current percentage
+	 * 
 	 * @return percentage (0-100)
 	 */
 	public double getProgressPercentage() {
@@ -143,6 +147,7 @@ public class ReplayController {
 
 	/**
 	 * Get current movNumber
+	 * 
 	 * @return current move number, or 0 if at start
 	 */
 	public int getCurrentMoveNumber() {

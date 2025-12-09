@@ -5,6 +5,7 @@ import java.util.*;
 
 import sprint5.mode.dao.*;
 import sprint5.mode.move.*;
+import sprint5.mode.player.*;
 
 public class GameReplay {
 	private final GameRecord game;
@@ -37,6 +38,10 @@ public class GameReplay {
 	}
 
 	public String getGameMode() {
+		return game.getGameMode().name();
+	}
+
+	public GameMode4 getGameModeEnum() {
 		return game.getGameMode();
 	}
 
@@ -57,6 +62,10 @@ public class GameReplay {
 	}
 
 	public String getGameStatus() {
+		return game.getGameStatus().name();
+	}
+
+	public GameStatus getGameStatusEnum() {
 		return game.getGameStatus();
 	}
 
@@ -117,13 +126,12 @@ public class GameReplay {
 		return moves.get(index);
 	}
 
-	// ----Checks for Human player ----
 	public boolean isBlueHuman() {
-		return bluePlayer.isHuman();
+		return getBluePlayerType() == PlayerType.HUMAN;
 	}
 
 	public boolean isRedHuman() {
-		return redPlayer.isHuman();
+		return getRedPlayerType() == PlayerType.HUMAN;
 	}
 
 	/**
@@ -192,7 +200,7 @@ public class GameReplay {
 	// Get information for the game
 	public String getDetailedInfo() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("=== Game Details ===\n");
+		sb.append("** Game Details **\n");
 		sb.append(String.format("Game ID: %d\n", getGameId()));
 		sb.append(String.format("Mode: %s\n", getGameMode()));
 		sb.append(String.format("Board Size: %dx%d\n", getBoardSize(), getBoardSize()));
@@ -261,4 +269,19 @@ public class GameReplay {
 		return game.getGameId().hashCode();
 	}
 
+	public PlayerType getBluePlayerType() {
+		return PlayerType.fromCode(bluePlayer.getPlayerType());
+	}
+
+	public PlayerType getRedPlayerType() {
+		return PlayerType.fromCode(redPlayer.getPlayerType());
+	}
+
+	public String getRedPlayerDisplay() {
+		return redPlayer.getName() + " (" + getRedPlayerType().getShortName() + ")";
+	}
+
+	public String getBluePlayerDisplay() {
+		return bluePlayer.getName() + " (" + getBluePlayerType().getShortName() + ")";
+	}
 }

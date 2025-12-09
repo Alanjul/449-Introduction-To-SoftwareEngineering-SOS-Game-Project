@@ -18,7 +18,7 @@ public class PlayerStats {
 	}
 
 	public PlayerStats(String playerName, int gamesPlayed, int gamesWon, int gamesLost, int gamesDrawn,
-			int totalSOSFormed, int totalPointScored) {
+			int totalSOSFormed, int totalPointsScored) {
 		validateStats(gamesPlayed, gamesWon, gamesLost, gamesDrawn);
 		this.playerName = playerName;
 		this.gamesPlayed = gamesPlayed;
@@ -35,7 +35,7 @@ public class PlayerStats {
 			throw new IllegalArgumentException("Statistics can not be negative");
 		}
 
-		if (won + lost + drawn != played) {
+		if (played != (won + lost + drawn)) {
 			throw new IllegalArgumentException(
 					String.format("Games played (%d) must equal won + lost + drawn (%d + %d + %d = %d)", played, won,
 							lost, drawn, won + lost + drawn));
@@ -159,6 +159,7 @@ public class PlayerStats {
 
 	/**
 	 * Get summary of statistics.
+	 * 
 	 * @return formatted statistics string
 	 */
 	public String getSummary() {
@@ -171,6 +172,7 @@ public class PlayerStats {
 
 	/**
 	 * generate statistics string.
+	 * 
 	 * @return compact stats string
 	 */
 	@Override

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
-public class GameBoard5  implements Board{
+public class GameBoard5 implements Board {
 
 	private char[][] grid;
-	private  int size;
+	private int size;
 	public static final char EMPTY = '\u0000';
 	private static final int MIN_BOARD_SIZE = 3;
 	private static final int MAX_BOARD_SIZE = 15;
@@ -23,13 +21,11 @@ public class GameBoard5  implements Board{
 		initializeGrid();
 	}
 
-	/*Private method to validate the move within the board*/
-	private void validateBoardSize(int size)
-	{
+	/* Private method to validate the move within the board */
+	private void validateBoardSize(int size) {
 		if ((size < MIN_BOARD_SIZE) || size > MAX_BOARD_SIZE) {
-			throw new IllegalArgumentException(
-					String .format("The size must be between %d and %d , got: %d",
-							MIN_BOARD_SIZE, MAX_BOARD_SIZE, size));
+			throw new IllegalArgumentException(String.format("The size must be between %d and %d , got: %d",
+					MIN_BOARD_SIZE, MAX_BOARD_SIZE, size));
 		}
 	}
 
@@ -42,14 +38,14 @@ public class GameBoard5  implements Board{
 	@Override
 	public char getCell(int row, int column) {
 
-		if(row < 0  || row >= size || column < 0 || column >= size) {
+		if (row < 0 || row >= size || column < 0 || column >= size) {
 			return EMPTY;
 		}
 		return grid[row][column];
 	}
-	//validate letter
-	private  boolean isValidLetter(char letter)
-	{
+
+	// validate letter
+	private boolean isValidLetter(char letter) {
 		return letter == 'S' || letter == 'O';
 	}
 
@@ -59,7 +55,7 @@ public class GameBoard5  implements Board{
 		checkValidRowsAndColumns(row, col);
 
 		if (!isValidLetter(letter) || (grid[row][col] != EMPTY)) {
-			return false ; //cell is already occupied
+			return false; // cell is already occupied
 
 		}
 
@@ -70,69 +66,59 @@ public class GameBoard5  implements Board{
 
 	} // end of make move method
 
-	//initialize the grid
+	// initialize the grid
 	private void initializeGrid() {
 		for (int i = 0; i < size; i++) {
-			Arrays.fill(grid[i], EMPTY);//clear the grid
+			Arrays.fill(grid[i], EMPTY);// clear the grid
 		}
 
+	}// end of the method grid
 
-	}//end of the method grid
-
-	//reset the game
+	// reset the game
 	@Override
-	public void resetGame()
-	{
+	public void resetGame() {
 		initializeGrid();
-		countMove = 0; //set to zero
+		countMove = 0; // set to zero
 
 	}
+
 //Find if the grid is full
 	@Override
-	public boolean isFull()
-	{
+	public boolean isFull() {
 		return countMove == size * size;
 	}
 
-
 	// helper method to check for valid row and col
-	private  void checkValidRowsAndColumns(int row, int col) {
-		if( row < 0 || row >= size || col < 0 || col >= size)
-		{
+	private void checkValidRowsAndColumns(int row, int col) {
+		if (row < 0 || row >= size || col < 0 || col >= size) {
 			throw new IndexOutOfBoundsException(
-					String.format("Invalid position (%d, %d) valid indices are 0 to %d"
-					,row, col, (size-1)));
+					String.format("Invalid position (%d, %d) valid indices are 0 to %d", row, col, (size - 1)));
 		}
 	}
 
-	//check for empty board
+	// check for empty board
 	@Override
-	public boolean isEmpty(int row, int col)
-	{
-		 checkValidRowsAndColumns(row, col);
-		 return grid[row][col] == EMPTY;
+	public boolean isEmpty(int row, int col) {
+		checkValidRowsAndColumns(row, col);
+		return grid[row][col] == EMPTY;
 	}
 
-	/* GetEmptyCell used by computer player to make a move
-	 *returns a list of int[] arrays where the computer can place the letter
-	 * */
+	/*
+	 * GetEmptyCell used by computer player to make a move returns a list of int[]
+	 * arrays where the computer can place the letter
+	 */
 	@Override
-	public List<Cell>getEmptyCells()
-	{
+	public List<Cell> getEmptyCells() {
 		List<Cell> empty = new ArrayList<>();
-		for (int i = 0; i < size; i++)
-		{
-			for (int j = 0; j < size; j++)
-			{
-				if (grid[i][j]== EMPTY)
-				{
-					empty.add(new Cell(i,j)); // add row and column coordinates to list
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (grid[i][j] == EMPTY) {
+					empty.add(new Cell(i, j)); // add row and column coordinates to list
 				}
 			}
 		}
-		return empty ; // return the empty grid for computer to make a move
+		return empty; // return the empty grid for computer to make a move
 	}
-
 
 	/*
 	 * The Board4 copy that is used by computer algorithm without modify the game
@@ -147,7 +133,7 @@ public class GameBoard5  implements Board{
 		}
 	}
 
-	//return deep copy of the board
+	// return deep copy of the board
 	@Override
 	public GameBoard5 copy() {
 		return new GameBoard5(this);
@@ -158,33 +144,27 @@ public class GameBoard5  implements Board{
 		return countMove;
 	}
 
-
-   @Override
+	@Override
 	public int getSize() {
 		return size;
 	}
 
-
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Board (").append(size).append("x").append(size).append("):\n");
 
-		for(int i = 0; i < size; i++)
-		{
-			sb.append(i).append(i < 10 ? "  ": " ");
+		for (int i = 0; i < size; i++) {
+			sb.append(i).append(i < 10 ? "  " : " ");
 
 		}
 		sb.append("\n");
-		//print rows
-		for(int i = 0; i < size; i++)
-		{
-			sb.append(i).append(i < 10 ? "  ": " ");
-			for(int j = 0; j < size; j++)
-			{
+		// print rows
+		for (int i = 0; i < size; i++) {
+			sb.append(i).append(i < 10 ? "  " : " ");
+			for (int j = 0; j < size; j++) {
 				char cell = grid[i][j];
-				sb.append(cell ==  EMPTY ? '.': cell).append(' ');
+				sb.append(cell == EMPTY ? '.' : cell).append(' ');
 			}
 			sb.append('\n');
 		}

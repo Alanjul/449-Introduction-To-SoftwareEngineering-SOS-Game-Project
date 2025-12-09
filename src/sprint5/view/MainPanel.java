@@ -11,16 +11,15 @@ public class MainPanel extends JPanel {
 
 	private SOSGameController controller;
 
-	//sub-Panels
+	// sub-Panels
 	private TopPanel topPanel;
 	private PlayerPanel bluePlayerPanel;
 	private PlayerPanel redPlayerPanel;
 	private GameBoardPanel boardPanel;
 	private BottomPanel bottomPanel;
 
-	/**Constructor to setup the panel*/
-	public MainPanel(SOSGameController controller)
-	{
+	/** Constructor to setup the panel */
+	public MainPanel(SOSGameController controller) {
 		this.controller = controller;
 		initializeComponents();
 		layOutPanel();
@@ -49,15 +48,12 @@ public class MainPanel extends JPanel {
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
-
-
 	/**
 	 * @return the topPanel
 	 */
 	public TopPanel getTopPanel() {
 		return topPanel;
 	}
-
 
 	/**
 	 * @return the bluePlayerPanel
@@ -66,14 +62,12 @@ public class MainPanel extends JPanel {
 		return bluePlayerPanel;
 	}
 
-
 	/**
 	 * @return the redPlayerPanel
 	 */
 	public PlayerPanel getRedPlayerPanel() {
 		return redPlayerPanel;
 	}
-
 
 	/**
 	 * @return the boardPanel
@@ -82,7 +76,6 @@ public class MainPanel extends JPanel {
 		return boardPanel;
 	}
 
-
 	/**
 	 * @return the bottomPanel
 	 */
@@ -90,8 +83,7 @@ public class MainPanel extends JPanel {
 		return bottomPanel;
 	}
 
-	public void resetPanels(int boardSize)
-	{
+	public void resetPanels(int boardSize) {
 		boardPanel.createBoard(boardSize);
 		revalidate();
 		repaint();

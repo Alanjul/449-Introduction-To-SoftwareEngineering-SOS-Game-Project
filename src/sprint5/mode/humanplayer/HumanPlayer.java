@@ -6,7 +6,8 @@ import sprint5.mode.move.Move;
 import sprint5.mode.player.Player;
 
 public class HumanPlayer extends Player {
-  private char preferredLetter;
+	private char preferredLetter;
+
 	public HumanPlayer(char symbol, String name, char preferredLetter) {
 		super(symbol, name);
 		setPreferredLetter(preferredLetter);
@@ -33,15 +34,14 @@ public class HumanPlayer extends Player {
 
 	/**
 	 * Set the player preferred letter
+	 * 
 	 * @param letter
 	 */
 	public void setPreferredLetter(char letter) {
-		if(letter != 'S' && letter != 'O')
-		{
+		if (letter != 'S' && letter != 'O') {
 			throw new IllegalArgumentException("Letter must be S or O");
 		}
 		this.preferredLetter = letter;
 	}
-
 
 }

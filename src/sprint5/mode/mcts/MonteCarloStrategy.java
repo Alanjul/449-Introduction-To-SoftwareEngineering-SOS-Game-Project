@@ -12,7 +12,7 @@ public class MonteCarloStrategy implements ComputerStrategy {
 	@Override
 	public Move findBestMove(Board board, Game4 game, Player computerPlayer, Player opponent,
 			ComputerPlayer.LevelsOfDifficulty difficultyLevel) {
-		MonteCarlosTreeSearch mcts = new MonteCarlosTreeSearch(computerPlayer, opponent,difficultyLevel, game);
+		MonteCarloTreeSearch mcts = new MonteCarloTreeSearch(computerPlayer, opponent,difficultyLevel, game);
 		return mcts.findBestMove(board);
 
 	}

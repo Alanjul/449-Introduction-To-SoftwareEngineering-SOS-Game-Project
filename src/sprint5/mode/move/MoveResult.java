@@ -6,17 +6,17 @@ import sprint5.util.LineSegment4;
 
 public class MoveResult {
 	private boolean success;
-	private List<LineSegment4>sosFormed;
-	private  boolean gameEnded; //goal state
+	private List<LineSegment4> sosFormed;
+	private boolean gameEnded; // goal state
 	private String message;
-	public MoveResult(String message, boolean success, List<LineSegment4>sosFormed )
-	{
+
+	public MoveResult(String message, boolean success, List<LineSegment4> sosFormed) {
 		this.message = message;
 		this.sosFormed = sosFormed;
 		this.success = success;
 
-
 	}
+
 	public boolean isSuccess() {
 		return success;
 	}
@@ -25,14 +25,11 @@ public class MoveResult {
 		return sosFormed;
 	}
 
-
-
 	public String getMessage() {
 		return message;
 	}
 
-	public int getSosCount()
-	{
+	public int getSosCount() {
 		return sosFormed != null ? sosFormed.size() : 0;
 	}
 

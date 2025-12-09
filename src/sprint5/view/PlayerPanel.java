@@ -42,27 +42,26 @@ public class PlayerPanel extends JPanel {
 		// computer difficulty
 		difficultyLabel = new JLabel("Difficulty");
 		String[] difficulties = { "Random", "Easy", "Medium", "Hard", "Expert" };
-		//create combox for selecting computer mode of play
+		// create combox for selecting computer mode of play
 		difficultyCombo = new JComboBox<>(difficulties);
 		difficultyCombo.setSelectedItem("Medium");
-		difficultyCombo.setEnabled(false);//disable when a human player is selected
+		difficultyCombo.setEnabled(false);// disable when a human player is selected
 
 	}
-	private void layoutComponents()
-	{
+
+	private void layoutComponents() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
-				playerName,
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), playerName,
 				TitledBorder.LEFT, TitledBorder.TOP));
 		setPreferredSize(new Dimension(180, getHeight()));
 
 		// Player type panel
 		JPanel typePanel = createPlayerTypePanel();
 
-		//Computer panel
+		// Computer panel
 		JPanel computerPanel = createDifficultyPanel();
 
-		//add spacing
+		// add spacing
 		add(Box.createVerticalStrut(10));
 		add(typePanel);
 		add(Box.createVerticalStrut(10));
@@ -71,7 +70,7 @@ public class PlayerPanel extends JPanel {
 
 	}
 
-	//Create player selection panel
+	// Create player selection panel
 	private JPanel createPlayerTypePanel() {
 
 		JPanel panel = new JPanel();
@@ -93,12 +92,12 @@ public class PlayerPanel extends JPanel {
 
 	}
 
-	//Create the player type selection panel
+	// Create the player type selection panel
 	private JPanel createLetterSelection() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panel.setBorder(BorderFactory.createEmptyBorder(0,30,0,0));
+		panel.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
 		ButtonGroup letter = new ButtonGroup();
 		letter.add(sButton);
 		letter.add(oButton);
@@ -111,35 +110,31 @@ public class PlayerPanel extends JPanel {
 		return panel;
 	}
 
-	/**Create difficult selection panel*/
-    private JPanel createDifficultyPanel()
-    {
-    	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-    	panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    	panel.add(difficultyLabel);
-    	panel.add(difficultyCombo);
-    	return panel;
-    }
+	/** Create difficult selection panel */
+	private JPanel createDifficultyPanel() {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.add(difficultyLabel);
+		panel.add(difficultyCombo);
+		return panel;
+	}
 
-    //setup listeners
-    private void setUpListeners()
-    {
-    	computerButton.addActionListener(e ->
-    	{
-    		difficultyCombo.setEnabled(true);
-    		sButton.setEnabled(false);
-    		oButton.setEnabled(false);
-    	});
+	// setup listeners
+	private void setUpListeners() {
+		computerButton.addActionListener(e -> {
+			difficultyCombo.setEnabled(true);
+			sButton.setEnabled(false);
+			oButton.setEnabled(false);
+		});
 
-    	humanButton.addActionListener(e ->
-    	{
-    		difficultyCombo.setEnabled(false);
-    		sButton.setEnabled(true);
-    		oButton.setEnabled(true);
-    	});
+		humanButton.addActionListener(e -> {
+			difficultyCombo.setEnabled(false);
+			sButton.setEnabled(true);
+			oButton.setEnabled(true);
+		});
 
+	}
 
-    }
 	/**
 	 * @return the humanButton
 	 */

@@ -38,6 +38,7 @@ public class TurnManager {
 	public boolean isRedsTurn() {
 		return currentTurn == PlayerColor.RED;
 	}
+
 	// Reset turn manager to initial state
 	public void reset() {
 		this.currentTurn = PlayerColor.BLUE;
@@ -49,6 +50,7 @@ public class TurnManager {
 		}
 		this.currentTurn = startingPlayer;
 	}
+
 	@Override
 	public String toString() {
 		return currentTurn.getDisplayName() + "'s turn";

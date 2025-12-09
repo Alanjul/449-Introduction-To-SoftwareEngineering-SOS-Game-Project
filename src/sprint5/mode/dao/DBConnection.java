@@ -7,17 +7,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.*;
 
 import javax.swing.JOptionPane;
 
 public class DBConnection {
+	private static final Logger LOGGER = Logger.getLogger(DBConnection.class.getName());
 	private static String URL;
 	private static String USERNAME;
 	private static String PASSWORD;
 	private static String DRIVER;
 	private static Properties properties = new Properties();
-	private static Connection connection;
-
 	// static block to load properties
 	static {
 
@@ -27,30 +27,27 @@ public class DBConnection {
 
 	public static void loadConfiguration() {
 		InputStream input = null;
-		boolean loaded = false;
 		try {
 			// load from class path
 			input = DBConnection.class.getClassLoader().getResourceAsStream("database.properties");
 
-			if (input != null) {
-				loaded = true;
-			}
 			if (input == null) {
 				try {
 					input = new FileInputStream("database.properties");
-					loaded = true;
 				} catch (IOException e) {
-					// File not in root, continue trying
+					// continue trying
 				}
 			}
 
 			if (input == null) {
-				throw new IOException("Cannot find database.properties file!\n" + "Current working directory: "
+				String errorMsg = ("Cannot find database.properties file!\n" + "Current working directory: "
 						+ System.getProperty("user.dir") + "\n" + "Please ensure database.properties is in:\n"
 						+ "1. Project root directory (where you have it now)\n" + "2. OR copy it to src/ folder\n"
 						+ "File should contain:\n" + "  db.driver=com.mysql.cj.jdbc.Driver\n"
 						+ "  db.url=jdbc:mysql://localhost:3306/sos_game_db\n" + "  db.user=root\n"
 						+ "  db.password=your_password");
+				LOGGER.severe(errorMsg);
+				throw new IOException(errorMsg);
 			}
 
 			properties.load(input);
@@ -62,14 +59,14 @@ public class DBConnection {
 			DRIVER = properties.getProperty("db.driver", "com.mysql.cj.jdbc.Driver");
 			validateConfiguration();
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Failed to load db.properties file");
+			LOGGER.log(Level.SEVERE, "Failed to load database properties", e);
 			e.printStackTrace();
 		} finally {
 			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null,"Warning: Failed to close properties file stream");
+					JOptionPane.showMessageDialog(null, "Warning: Failed to close properties file stream");
 				}
 			}
 		}
@@ -85,54 +82,36 @@ public class DBConnection {
 			throw new IllegalStateException("db.user is not configured in database.properties\n" + "Add: db.user=root");
 		}
 		if (PASSWORD == null) {
-			JOptionPane.showMessageDialog(null," Warning: db.password is empty (no password set)");
+			LOGGER.warning("db.password is empty (no password set)");
 		}
 	}
 
 	private static void loadDriver() {
 		try {
 			Class.forName(DRIVER);
-			System.out.println(" JDBC Driver loaded: " + DRIVER);
 		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null," JDBC Driver not found: " + DRIVER);
-			JOptionPane.showMessageDialog(null,"  Please add MySQL Connector/J to your project:");
-			JOptionPane.showMessageDialog(null,"  Download from: https://dev.mysql.com/downloads/connector/j/");
-			JOptionPane.showMessageDialog(null,"  Or add to Build Path in Eclipse/IntelliJ");
+			String errorMsg = " JDBC Driver not found: " + DRIVER + "\nPlease add MySQL Connector/J to your project:\n"
+					+ "Download from: https://dev.mysql.com/downloads/connector/j/\n"
+					+ "Or add to Build Path in Eclipse/IntelliJ";
+			LOGGER.severe(errorMsg);
 			throw new RuntimeException("Database driver not found", e);
 		}
 	}
 
 	public static Connection getConnection() throws SQLException {
 		try {
-			if (connection == null || connection.isClosed()) {
-				connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			}
-			return connection;
+			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			return conn;
 		} catch (SQLException e) {
-			System.err.println(" Failed to connect to database");
-			System.err.println("  URL: " + URL);
-			System.err.println("  User: " + USERNAME);
-			System.err.println("  Error: " + e.getMessage());
-			System.err.println("\nTroubleshooting:");
-			System.err.println("  1. Is MySQL server running?");
-			System.err.println("  2. Does database '" + extractDatabaseName(URL) + "' exist?");
-			System.err.println("  3. Is the password correct?");
-			System.err.println("  4. Can you connect with: mysql -u " + USERNAME + " -p");
+			String errorMsg = String.format(
+					" Failed to connect to database\n" + "  URL: %s\n" + "  User:  %s\n" + "Error: \s"
+							+ "\nTroubleshooting:\n" + " 1. Is MySQL server running?"
+							+ " 2. Does database '%s' exist?\n" + " 3. Is the password correct?\n"
+							+ " 4. Can you connect with: mysql -u %s -p",
+					URL, USERNAME, e.getMessage(), extractDatabaseName(URL), USERNAME);
+			LOGGER.severe(errorMsg);
+			;
 			throw e;
-		}
-	}
-
-	// close connection
-	public static void closeConnection() {
-		if (connection != null) {
-			try {
-				if (!connection.isClosed()) {
-					connection.close();
-					JOptionPane.showMessageDialog(null,"Database connection closed");
-				}
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null,"Error closing connection: " + e.getMessage());
-			}
 		}
 	}
 
@@ -153,9 +132,22 @@ public class DBConnection {
 				return dbPart;
 			}
 		} catch (Exception e) {
-
+			LOGGER.log(Level.WARNING, "Error extracting database name", e);
 		}
 		return "unknown";
+	}
+
+	// Getters for testing
+	public static String getURL() {
+		return URL;
+	}
+
+	public static String getUSERNAME() {
+		return USERNAME;
+	}
+
+	public static String getPASSWORD() {
+		return PASSWORD;
 	}
 
 }

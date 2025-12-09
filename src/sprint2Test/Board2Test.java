@@ -9,15 +9,18 @@ import org.junit.Test;
 
 import sprint2.Board2;
 import sprint2.GameMode;
+import sprint5.mode.board.GameBoard5;
 
 
 public class Board2Test {
+		private GameBoard5 board1;
 		private Board2 board;
 
 		@Before
 		public void setUp() throws Exception {
 
 			board = new Board2(3);
+			board1 = new GameBoard5(4);
 		}
 
 		@After

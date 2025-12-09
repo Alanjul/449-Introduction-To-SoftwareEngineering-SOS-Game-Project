@@ -79,7 +79,7 @@ public class BoardSearcher {
 	// FindPatternWithOInMiddle finds sos pattern where 'O' is at row, col
 	// checking for direction along the each axis
 	private static List<LineSegment4> findPatternWithOInMiddle(Board board, int row, int col, Color color) {
-		List<LineSegment4> sosPattern = new ArrayList<>(8);
+		List<LineSegment4> sosPattern = new ArrayList<>(4);
 		// check 4 directions
 
 		for (int[] dir : AXES) {
@@ -149,20 +149,25 @@ public class BoardSearcher {
 	}
 
 	// Find the best move for the
-	public static Move findBestMove(Board board, char letter) {
+	public static Move findBestMove(Board board) {
 		List<Board.Cell> emptyCells = board.getEmptyCells();
-		Move bestMove = null;
-		int maxSOS = 0;
+		Move best = null;
+		int bestScore = -1;
 
 		for (Board.Cell cell : emptyCells) {
-			int sosCount = countSOS(board, cell.row(), cell.col(), letter);
-			if (sosCount > maxSOS) {
-				maxSOS = sosCount;
-				bestMove = new Move(cell.row(), cell.col(), letter);
-			}
+			 int scoreS = countSOS(board, cell.row(), cell.col(), 'S');
+	         int scoreO = countSOS(board, cell.row(), cell.col(), 'O');
+    		 if (scoreS > bestScore) {
+                 best = new Move(cell.row(), cell.col(), 'S');
+                 bestScore = scoreS;
+             }
+             if (scoreO > bestScore) {
+                 best = new Move(cell.row(), cell.col(), 'O');
+                 bestScore = scoreO;
+             }
 		}
 
-		return bestMove;
+		return best;
 	}
 
 	// Helper method
@@ -195,6 +200,66 @@ public class BoardSearcher {
 		boolean isValid() {
 			return valid;
 		}
+	}
+	
+	//Count potential SOS patterns a move will create in the future
+	public static int countPotentialSOS(Board board, int row, int col)
+	{
+		if (!board.isEmpty(row, col)) return 0;
+		int potential = 0;
+		char []letters = {'S', 'O'};
+		for (char letter : letters)
+		{
+			Board copy = board.copy();
+			copy.makeMove(row, col, letter);
+			
+			for (int[] dir : AXES)
+			{
+				int row1 = row - dir[0] , col1 = col - dir[1];
+				int row2 = row + dir[0], col2 = col + dir[1];
+				
+				if(isValidPosition(copy, row1, col1) && isValidPosition(copy, row2, col2))
+				{
+					char a = copy.getCell(row1, col1);
+					char b =  copy.getCell(row, col);
+					char c = copy.getCell(row2, col2);
+					
+					if(isPotentialSOS(a, b, c))
+					{
+						potential++;
+					}
+				}
+				//One direction
+				int rowMid = row + dir[0], colMid = col + dir[1];
+				int rowEnd = row + 2 * dir[0], colEnd = col + 2 * dir[1];
+				if(isValidPosition(copy, rowMid, colMid) &&
+						isValidPosition(copy, rowEnd, colEnd))
+				{
+					char a = copy.getCell(row, col);
+					char b = copy.getCell(rowMid, colMid);
+					char c = copy.getCell(rowEnd, colEnd);
+					
+					if(isPotentialSOS(a, b, c))
+					{
+						potential++;
+					}
+				}
+				
+			}
+		}
+		return potential;
+	}
+	private static boolean isPotentialSOS(char a, char b, char c)
+	{
+		if (a == 'S' && b == 'O' && c == '\0') return true;
+		if(a == '\0' && b == 'O' && c == 'S') return true;
+		if (a == '\0' && b == 'O' && c == '\0') return true;
+		if (a == 'S' && b == '\0' && c == '\0') return true;
+		if (a == '\0' && b == '\0' && c == 'S') return true;
+		if (a == 'S' && b == '\0' && c == 'S') return true;
+		if (a == '\0' && b == 'S' && c == '\0') return true;
+		
+		 return false;
 	}
 
 }
