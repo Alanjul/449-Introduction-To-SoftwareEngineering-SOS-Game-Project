@@ -26,15 +26,15 @@ players after each move.
 player who made the most SOSs. If both players made the same number of SOSs, then
 the game is a draw. When a player succeeds in creating an SOS, that player immediately
 takes another turn and continues to do until no SOS is created on their turn. Otherwise, turns alternate between players after each move
-
-
 Project Structure
 src/
    |-sprint5/
      |- controller/ -> Game Logic Controllers
      | - model/ -> model packages with classes
      | - view/ -> Contains UI component and the main
-     INSTRUCTIONS
+     INSTRUCTIONS 
+
+     
     Create the database
     Import the dumb  located in the repository
     
