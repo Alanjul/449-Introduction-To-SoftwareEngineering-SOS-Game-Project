@@ -29,11 +29,12 @@ takes another turn and continues to do until no SOS is created on their turn. Ot
 Project Structure
 src/
    |-sprint5/
+
+   
      |- controller/ -> Game Logic Controllers
      | - model/ -> model packages with classes
      | - view/ -> Contains UI component and the main
-     INSTRUCTIONS 
-
+     INSTRUCTIONS
      
     Create the database
     Import the dumb  located in the repository
