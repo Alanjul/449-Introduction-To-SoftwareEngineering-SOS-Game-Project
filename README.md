@@ -39,4 +39,5 @@ src/
     Import the project if using an IDE(Intellij, Eclipse)
     Set src/sprint5 as the source root    
     run the main class in the under the view/ package   
-    Test classes are included in the src/sprint5Test. You need to have jUnit4 installed on your IDE.
+    Test classes are included in the src/sprint5Test.  
+    You need to have jUnit4 installed on your IDE.
