@@ -174,17 +174,28 @@ public class GameReplayService {
 	 */
 	public List<GameReplay> searchReplaysByPlayer(String playerName) {
 		try {
+			String term = playerName.toLowerCase().trim();
+			if (term.isEmpty()) {
+				return getAllReplays();
+			}
+			
+			Set<GameReplay>matchReplays = new HashSet<>();
+			for(GameReplay result : getAllReplays()){
+				String blueType = result.getBluePlayerType().getShortName().toLowerCase();
+				String redType = result.getRedPlayerType().getShortName().toLowerCase();
+				if(blueType.contains(term) || redType.contains(term))
+				{
+					matchReplays.add(result);
+				}
+			}
 			List<PlayerRecord> players = playerDAO.searchByPattern(playerName);
-			if (players.isEmpty()) {
-				return new ArrayList<>();
+			for (PlayerRecord player : players)
+			{
+				matchReplays.addAll(getPlayerReplays(player.getPlayerId()));
 			}
-			List<GameReplay> allReplays = new ArrayList<>();
-			for (PlayerRecord player : players) {
-				allReplays.addAll(getPlayerReplays(player.getPlayerId()));
-			}
-
-			// remove duplicate
-			return allReplays.stream().distinct().sorted((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()))
+         
+			// Convert to list and sort by data
+			return matchReplays.stream().sorted((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()))
 					.collect(Collectors.toList());
 
 		} catch (Exception e) {
