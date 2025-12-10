@@ -25,7 +25,19 @@ players after each move.
 (b) General game: The game continues until the board has been filled up. The winner is the
 player who made the most SOSs. If both players made the same number of SOSs, then
 the game is a draw. When a player succeeds in creating an SOS, that player immediately
-takes another turn and continues to do until no SOS is created on their turn. Otherwise, turns alternate between players after each move
+takes another turn and continues to do until no SOS is created on their turn. Otherwise, turns alternate between players after each move   
 
-
-STILL IN THE IMPLEMENTATION PHASE
+Project Structure  
+src/  
+|-sprint5/  
+     |- controller/ -> Game Logic Controllers   
+     | - model/ -> model packages with classes  
+     | - view/ -> Contains UI component and the main   
+     INSTRUCTIONS
+    Create the database
+    Import the dumb  located in the repository   
+    Import the project if using an IDE(Intellij, Eclipse)
+    Set src/sprint5 as the source root    
+    run the main class in the under the view/ package   
+    Test classes are included in the src/sprint5Test.  
+    You need to have jUnit4 installed on your IDE.
