@@ -33,8 +33,8 @@ src/
      |- controller/ -> Game Logic Controllers   
      | - model/ -> model packages with classes  
      | - view/ -> Contains UI component and the main   
-     INSTRUCTIONS
-    Create the database
+     INSTRUCTIONS  
+     Create the database  
     Import the dumb  located in the repository  
     Import the project if using an IDE(Intellij, Eclipse)   
     Set src/sprint5 as the source root  
